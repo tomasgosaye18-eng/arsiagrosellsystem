@@ -319,5 +319,21 @@ See `AAM_Phase7_Testing_Checklist.md` in the project root for 153 test cases cov
 
 ---
 
+---
+
+## Team Members
+
+This project was built by a team of 5 students from Arsi University.
+
+| # | Name  |
+|---|-------|
+| 1 | Tomas |
+| 2 | Hiwot |
+| 3 | Eden  |
+| 4 | Fenet |
+| 5 | Marta |
+
+---
+
 *Arsi Agri-Manage — Arsi University, Ethiopia*  
 *Phase 7 completed: July 28, 2026*
