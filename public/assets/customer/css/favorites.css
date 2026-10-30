@@ -1,0 +1,570 @@
+/*
+ * ============================================================
+ * AU-AgroSale — Customer Favorites / Wishlist Styles
+ * favorites.css
+ * ============================================================
+ * Covers:
+ *   - Heart/wishlist button active (favorited) state on
+ *     product listing cards (cpl-card__wishlist)
+ *     and home page cards (ch-product-card__wishlist)
+ *   - Favorites button on product detail (cpd-fav-btn)
+ *   - Favorites page grid (caf-*)
+ *   - Dark mode support via existing CSS variables
+ *   - Fully responsive
+ * ============================================================
+ */
+
+/* ══════════════════════════════════════════════════════════
+   PRODUCT LISTING — heart button active (favorited) state
+   Extends the existing .cpl-card__wishlist rules in
+   components.css without modifying the original file.
+   ══════════════════════════════════════════════════════════ */
+
+.customer-app .cpl-card__wishlist--active,
+.customer-app .cpl-card__wishlist[aria-pressed="true"] {
+    color: var(--c-danger) !important;
+    background: #fff !important;
+}
+
+.customer-app .cpl-card__wishlist--active i,
+.customer-app .cpl-card__wishlist[aria-pressed="true"] i {
+    color: var(--c-danger);
+}
+
+/* Dark mode overrides */
+.customer-app[data-customer-theme="dark"] .cpl-card__wishlist--active,
+.customer-app.c-theme-dark .cpl-card__wishlist--active,
+.customer-app[data-customer-theme="dark"] .cpl-card__wishlist[aria-pressed="true"],
+.customer-app.c-theme-dark .cpl-card__wishlist[aria-pressed="true"] {
+    color: #ef9a9a !important;
+    background: rgba(26,46,27,1) !important;
+}
+
+/* Home page card wishlist active state */
+.customer-app .ch-product-card__wishlist--active,
+.customer-app .ch-product-card__wishlist[aria-pressed="true"] {
+    color: var(--c-danger) !important;
+    background: #fff !important;
+}
+
+.customer-app[data-customer-theme="dark"] .ch-product-card__wishlist--active,
+.customer-app.c-theme-dark .ch-product-card__wishlist--active,
+.customer-app[data-customer-theme="dark"] .ch-product-card__wishlist[aria-pressed="true"],
+.customer-app.c-theme-dark .ch-product-card__wishlist[aria-pressed="true"] {
+    color: #ef9a9a !important;
+    background: rgba(26,46,27,1) !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   PRODUCT DETAIL — favorites button (cpd-fav-btn)
+   Placed beside the product name heading.
+   ══════════════════════════════════════════════════════════ */
+
+/* Name + button row container */
+.customer-app .cpd-info__name-row {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--c-space-3);
+    margin-bottom: var(--c-space-4);
+}
+
+.customer-app .cpd-info__name-row .cpd-info__name {
+    margin-bottom: 0;
+    flex: 1;
+    min-width: 0;
+}
+
+/* Favorite button */
+.customer-app .cpd-fav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--c-space-2);
+    padding: var(--c-space-2) var(--c-space-4);
+    border: 1.5px solid var(--c-border);
+    border-radius: var(--c-radius-pill);
+    background: var(--c-surface);
+    color: var(--c-text-muted);
+    font-size: var(--c-size-sm);
+    font-weight: var(--c-weight-medium);
+    font-family: var(--c-font);
+    cursor: pointer;
+    transition: var(--c-transition-fast);
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 6px;
+}
+
+.customer-app .cpd-fav-btn i {
+    font-size: 16px;
+    transition: var(--c-transition-fast);
+}
+
+.customer-app .cpd-fav-btn:hover {
+    border-color: var(--c-danger);
+    color: var(--c-danger);
+    background: var(--c-danger-bg);
+}
+
+.customer-app .cpd-fav-btn:focus-visible {
+    outline: 2px solid var(--c-border-focus);
+    outline-offset: 2px;
+}
+
+/* Active / saved state */
+.customer-app .cpd-fav-btn--active,
+.customer-app .cpd-fav-btn[aria-pressed="true"] {
+    border-color: var(--c-danger);
+    color: var(--c-danger);
+    background: var(--c-danger-bg);
+}
+
+/* Dark mode */
+.customer-app[data-customer-theme="dark"] .cpd-fav-btn,
+.customer-app.c-theme-dark .cpd-fav-btn {
+    background: var(--c-surface);
+    border-color: var(--c-border);
+    color: var(--c-text-muted);
+}
+
+.customer-app[data-customer-theme="dark"] .cpd-fav-btn:hover,
+.customer-app.c-theme-dark .cpd-fav-btn:hover,
+.customer-app[data-customer-theme="dark"] .cpd-fav-btn--active,
+.customer-app.c-theme-dark .cpd-fav-btn--active,
+.customer-app[data-customer-theme="dark"] .cpd-fav-btn[aria-pressed="true"],
+.customer-app.c-theme-dark .cpd-fav-btn[aria-pressed="true"] {
+    border-color: var(--c-danger);
+    color: var(--c-danger);
+    background: var(--c-danger-bg);
+}
+
+/* ══════════════════════════════════════════════════════════
+   FAVORITES PAGE EMPTY STATE  (caf-empty)
+   ══════════════════════════════════════════════════════════ */
+
+.customer-app .caf-empty {
+    text-align: center;
+    padding: var(--c-space-16) var(--c-space-5);
+    color: var(--c-text-muted);
+}
+
+.customer-app .caf-empty__icon {
+    font-size: 56px;
+    color: var(--c-border);
+    margin-bottom: var(--c-space-5);
+    display: block;
+    line-height: 1;
+}
+
+.customer-app .caf-empty__icon i {
+    color: var(--c-border);
+}
+
+.customer-app .caf-empty__title {
+    font-size: var(--c-size-xl);
+    font-weight: var(--c-weight-bold);
+    color: var(--c-text);
+    margin: 0 0 var(--c-space-3);
+    line-height: var(--c-leading-snug);
+}
+
+.customer-app .caf-empty__desc {
+    font-size: var(--c-size-base);
+    color: var(--c-text-muted);
+    margin-bottom: var(--c-space-6);
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ══════════════════════════════════════════════════════════
+   FAVORITES PRODUCT GRID  (caf-grid / caf-card)
+   Uses the same visual language as cpl-card on the
+   product listing page. Same columns, spacing, shadows.
+   ══════════════════════════════════════════════════════════ */
+
+.customer-app .caf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--c-space-5);
+}
+
+/* ── Card ─────────────────────────────────────────────────── */
+.customer-app .caf-card {
+    background: var(--c-card-bg);
+    border: 1px solid var(--c-card-border);
+    border-radius: var(--c-radius-lg);
+    box-shadow: var(--c-card-shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: var(--c-transition);
+    position: relative;
+}
+
+.customer-app .caf-card:hover {
+    box-shadow: var(--c-card-shadow-hover);
+    transform: translateY(-2px);
+}
+
+.customer-app .caf-card--unavailable {
+    opacity: 0.65;
+}
+
+.customer-app .caf-card--unavailable:hover {
+    transform: none;
+    box-shadow: var(--c-card-shadow);
+}
+
+/* ── Card image area ─────────────────────────────────────── */
+.customer-app .caf-card__img-wrap {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--c-bg-alt);
+}
+
+.customer-app .caf-card__img-wrap > a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.customer-app .caf-card__img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .35s ease;
+}
+
+.customer-app .caf-card:hover .caf-card__img-wrap img {
+    transform: scale(1.04);
+}
+
+.customer-app .caf-card__img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    background: var(--c-bg-alt);
+    color: var(--c-border);
+}
+
+/* Out-of-stock overlay badge */
+.customer-app .caf-card__out-badge {
+    position: absolute;
+    bottom: var(--c-space-2);
+    left: var(--c-space-2);
+    right: var(--c-space-2);
+    background: rgba(0,0,0,.6);
+    color: #fff;
+    font-size: var(--c-size-xs);
+    font-weight: var(--c-weight-semi);
+    padding: 4px var(--c-space-2);
+    border-radius: var(--c-radius-sm);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    justify-content: center;
+}
+
+.customer-app .caf-card__out-badge--unavailable {
+    background: rgba(198,40,40,.75);
+}
+
+/* Heart remove button (top-right) */
+.customer-app .caf-card__heart {
+    position: absolute;
+    top: var(--c-space-2);
+    right: var(--c-space-2);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.9);
+    border: none;
+    color: var(--c-danger);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--c-transition-fast);
+    box-shadow: 0 1px 6px rgba(0,0,0,.12);
+    z-index: 1;
+}
+
+.customer-app .caf-card__heart:hover {
+    background: #fff;
+    transform: scale(1.15);
+    color: #b71c1c;
+}
+
+.customer-app .caf-card__heart:focus-visible {
+    outline: 2px solid var(--c-border-focus);
+    outline-offset: 2px;
+}
+
+.customer-app .caf-card__heart--active {
+    color: var(--c-danger);
+}
+
+/* Dark mode heart button */
+.customer-app[data-customer-theme="dark"] .caf-card__heart,
+.customer-app.c-theme-dark .caf-card__heart {
+    background: rgba(26,46,27,.9);
+    color: var(--c-danger);
+}
+
+.customer-app[data-customer-theme="dark"] .caf-card__heart:hover,
+.customer-app.c-theme-dark .caf-card__heart:hover {
+    background: rgba(26,46,27,1);
+    color: #ef9a9a;
+}
+
+/* ── Card body ───────────────────────────────────────────── */
+.customer-app .caf-card__body {
+    padding: var(--c-space-3) var(--c-space-4) var(--c-space-2);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-space-1);
+}
+
+.customer-app .caf-card__category {
+    font-size: var(--c-size-xs);
+    font-weight: var(--c-weight-semi);
+    color: var(--c-primary);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+}
+
+.customer-app .caf-card__name {
+    font-size: var(--c-size-sm);
+    font-weight: var(--c-weight-semi);
+    color: var(--c-text);
+    line-height: var(--c-leading-snug);
+    margin: 0;
+}
+
+.customer-app .caf-card__name a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.customer-app .caf-card__name a:hover {
+    color: var(--c-primary);
+}
+
+.customer-app .caf-card__price-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--c-space-1);
+    margin-top: var(--c-space-1);
+}
+
+.customer-app .caf-card__price {
+    font-size: var(--c-size-base);
+    font-weight: var(--c-weight-bold);
+    color: var(--c-price);
+    font-feature-settings: "tnum";
+}
+
+.customer-app .caf-card__price-unit {
+    font-size: var(--c-size-xs);
+    color: var(--c-text-muted);
+}
+
+/* Availability line */
+.customer-app .caf-card__avail {
+    font-size: var(--c-size-xs);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 2px;
+}
+
+.customer-app .caf-card__avail--ok {
+    color: var(--c-success);
+}
+
+.customer-app .caf-card__avail--low {
+    color: var(--c-warning);
+}
+
+.customer-app .caf-card__avail--out {
+    color: var(--c-text-muted);
+}
+
+/* ── Card footer ─────────────────────────────────────────── */
+.customer-app .caf-card__footer {
+    padding: var(--c-space-3) var(--c-space-4) var(--c-space-4);
+    display: flex;
+    gap: var(--c-space-2);
+}
+
+/* Add to Cart button — matches cpl-card__add-btn style */
+.customer-app .caf-card__cart-btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--c-space-2);
+    padding: var(--c-space-2) var(--c-space-3);
+    background: var(--c-btn-primary-bg);
+    color: var(--c-btn-primary-text);
+    border: none;
+    border-radius: var(--c-radius-md);
+    font-size: var(--c-size-sm);
+    font-weight: var(--c-weight-semi);
+    font-family: var(--c-font);
+    cursor: pointer;
+    text-decoration: none;
+    transition: var(--c-transition-fast);
+    white-space: nowrap;
+}
+
+.customer-app .caf-card__cart-btn:hover {
+    background: var(--c-btn-primary-hover);
+    color: var(--c-btn-primary-text);
+    text-decoration: none;
+}
+
+.customer-app .caf-card__cart-btn:focus-visible {
+    outline: 2px solid var(--c-border-focus);
+    outline-offset: 2px;
+}
+
+/* Link variant (Select Shop) */
+.customer-app .caf-card__cart-btn--link {
+    background: var(--c-btn-secondary-bg);
+    color: var(--c-btn-secondary-text);
+    border: 1.5px solid var(--c-btn-secondary-border);
+}
+
+.customer-app .caf-card__cart-btn--link:hover {
+    background: var(--c-btn-secondary-hover);
+    color: var(--c-btn-secondary-text);
+}
+
+/* Disabled / out-of-stock */
+.customer-app .caf-card__cart-btn--disabled,
+.customer-app .caf-card__cart-btn:disabled {
+    background: var(--c-bg-alt);
+    color: var(--c-text-muted);
+    border: 1.5px solid var(--c-border);
+    cursor: not-allowed;
+}
+
+.customer-app .caf-card__cart-btn--disabled:hover,
+.customer-app .caf-card__cart-btn:disabled:hover {
+    background: var(--c-bg-alt);
+    color: var(--c-text-muted);
+    transform: none;
+}
+
+/* Remove button (unavailable products) */
+.customer-app .caf-card__remove-btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--c-space-2);
+    padding: var(--c-space-2) var(--c-space-3);
+    background: var(--c-danger-bg);
+    color: var(--c-danger);
+    border: 1.5px solid var(--c-danger);
+    border-radius: var(--c-radius-md);
+    font-size: var(--c-size-sm);
+    font-weight: var(--c-weight-medium);
+    font-family: var(--c-font);
+    cursor: pointer;
+    transition: var(--c-transition-fast);
+}
+
+.customer-app .caf-card__remove-btn:hover {
+    background: var(--c-danger);
+    color: #fff;
+}
+
+.customer-app .caf-card__remove-btn:focus-visible {
+    outline: 2px solid var(--c-danger);
+    outline-offset: 2px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   SIDEBAR FAVORITES COUNT BADGE
+   ══════════════════════════════════════════════════════════ */
+
+.customer-app .caf-nav-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    background: var(--c-danger);
+    color: #fff;
+    font-size: 10px;
+    font-weight: var(--c-weight-bold);
+    border-radius: var(--c-radius-pill);
+    margin-left: auto;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════════════ */
+
+/* 3 columns on tablet */
+@media (max-width: 1024px) {
+    .customer-app .caf-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: var(--c-space-4);
+    }
+}
+
+/* 2 columns on mobile */
+@media (max-width: 640px) {
+    .customer-app .caf-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--c-space-3);
+    }
+
+    .customer-app .caf-card__body {
+        padding: var(--c-space-2) var(--c-space-3) var(--c-space-1);
+    }
+
+    .customer-app .caf-card__footer {
+        padding: var(--c-space-2) var(--c-space-3) var(--c-space-3);
+    }
+
+    .customer-app .caf-card__cart-btn {
+        font-size: var(--c-size-xs);
+        padding: var(--c-space-2);
+        gap: 3px;
+    }
+
+    .customer-app .caf-empty {
+        padding: var(--c-space-10) var(--c-space-4);
+    }
+
+    .customer-app .caf-empty__title {
+        font-size: var(--c-size-lg);
+    }
+
+    /* Name row stacks on very small screens */
+    .customer-app .cpd-info__name-row {
+        flex-wrap: wrap;
+        gap: var(--c-space-2);
+    }
+}
+
+/* Single column on very small mobile */
+@media (max-width: 380px) {
+    .customer-app .caf-grid {
+        grid-template-columns: 1fr;
+    }
+}

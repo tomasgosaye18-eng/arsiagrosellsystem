@@ -1,0 +1,284 @@
+/*
+ * ============================================================
+ * AU-AgroSale — Customer Frontend Design Tokens
+ * variables.css
+ * ============================================================
+ * ALL tokens are scoped inside .customer-app so they NEVER
+ * bleed into the admin / dashboard / POS CSS trees.
+ * ============================================================
+ */
+
+/* ── Light Mode (default) ─────────────────────────────────── */
+.customer-app {
+
+    /* Brand */
+    --c-primary:          #2e7d32;   /* Arsi green */
+    --c-primary-hover:    #1b5e20;
+    --c-primary-light:    #e8f5e9;
+    --c-primary-mid:      #4caf50;
+    --c-secondary:        #795548;   /* Earth / soil */
+    --c-secondary-hover:  #5d4037;
+    --c-secondary-light:  #efebe9;
+    --c-accent:           #ff8f00;   /* Warm harvest amber */
+    --c-accent-hover:     #e65100;
+    --c-accent-light:     #fff3e0;
+
+    /* Surface */
+    --c-bg:               #f7f9f7;
+    --c-bg-alt:           #eef2ee;
+    --c-surface:          #ffffff;
+    --c-surface-raised:   #ffffff;
+    --c-surface-overlay:  rgba(255,255,255,.96);
+
+    /* Text */
+    --c-text:             #1a2e1b;
+    --c-text-muted:       #6e7e6f;
+    --c-text-inverse:     #ffffff;
+    --c-text-on-primary:  #ffffff;
+    --c-text-on-accent:   #ffffff;
+    --c-link:             #2e7d32;
+    --c-link-hover:       #1b5e20;
+
+    /* Borders */
+    --c-border:           #dce8dc;
+    --c-border-muted:     #edf4ed;
+    --c-border-focus:     #4caf50;
+
+    /* Semantic */
+    --c-success:          #2e7d32;
+    --c-success-bg:       #e8f5e9;
+    --c-warning:          #f57f17;
+    --c-warning-bg:       #fff8e1;
+    --c-danger:           #c62828;
+    --c-danger-bg:        #ffebee;
+    --c-info:             #0277bd;
+    --c-info-bg:          #e1f5fe;
+
+    /* Price */
+    --c-price:            #1b5e20;
+    --c-price-old:        #9e9e9e;
+    --c-price-badge:      #e8f5e9;
+
+    /* Badge / availability */
+    --c-badge-available:  #2e7d32;
+    --c-badge-available-bg: #e8f5e9;
+    --c-badge-unavail:    #9e9e9e;
+    --c-badge-unavail-bg: #f5f5f5;
+    --c-badge-low:        #f57f17;
+    --c-badge-low-bg:     #fff8e1;
+
+    /* Navigation */
+    --c-nav-bg:           #ffffff;
+    --c-nav-border:       #dce8dc;
+    --c-nav-shadow:       0 2px 12px rgba(46,125,50,.08);
+    --c-nav-text:         #1a2e1b;
+    --c-nav-text-muted:   #6e7e6f;
+    --c-nav-active:       #2e7d32;
+
+    /* Card */
+    --c-card-bg:          #ffffff;
+    --c-card-border:      #dce8dc;
+    --c-card-shadow:      0 2px 12px rgba(0,0,0,.06);
+    --c-card-shadow-hover:0 8px 28px rgba(46,125,50,.14);
+
+    /* Input */
+    --c-input-bg:         #ffffff;
+    --c-input-border:     #cdd9cd;
+    --c-input-border-focus:#4caf50;
+    --c-input-placeholder:#9aad9b;
+    --c-input-text:       #1a2e1b;
+    --c-input-shadow-focus:0 0 0 3px rgba(76,175,80,.18);
+
+    /* Button */
+    --c-btn-primary-bg:      #2e7d32;
+    --c-btn-primary-text:    #ffffff;
+    --c-btn-primary-hover:   #1b5e20;
+    --c-btn-secondary-bg:    #f7f9f7;
+    --c-btn-secondary-text:  #2e7d32;
+    --c-btn-secondary-border:#2e7d32;
+    --c-btn-secondary-hover: #e8f5e9;
+    --c-btn-accent-bg:       #ff8f00;
+    --c-btn-accent-text:     #ffffff;
+    --c-btn-accent-hover:    #e65100;
+
+    /* Spacing scale */
+    --c-space-1:  4px;
+    --c-space-2:  8px;
+    --c-space-3:  12px;
+    --c-space-4:  16px;
+    --c-space-5:  20px;
+    --c-space-6:  24px;
+    --c-space-8:  32px;
+    --c-space-10: 40px;
+    --c-space-12: 48px;
+    --c-space-16: 64px;
+    --c-space-20: 80px;
+
+    /* Typography */
+    --c-font:           'Segoe UI', system-ui, -apple-system, sans-serif;
+    --c-font-mono:      'Consolas', 'Courier New', monospace;
+    --c-size-xs:        0.75rem;    /* 12px */
+    --c-size-sm:        0.875rem;   /* 14px */
+    --c-size-base:      1rem;       /* 16px */
+    --c-size-lg:        1.125rem;   /* 18px */
+    --c-size-xl:        1.25rem;    /* 20px */
+    --c-size-2xl:       1.5rem;     /* 24px */
+    --c-size-3xl:       1.875rem;   /* 30px */
+    --c-size-4xl:       2.25rem;    /* 36px */
+    --c-size-5xl:       3rem;       /* 48px */
+    --c-size-6xl:       3.75rem;    /* 60px */
+    --c-weight-normal:  400;
+    --c-weight-medium:  500;
+    --c-weight-semi:    600;
+    --c-weight-bold:    700;
+    --c-weight-extrabold:800;
+    --c-leading-tight:  1.2;
+    --c-leading-snug:   1.35;
+    --c-leading-base:   1.6;
+    --c-leading-loose:  1.8;
+
+    /* Radius */
+    --c-radius-sm:    6px;
+    --c-radius-md:    10px;
+    --c-radius-lg:    16px;
+    --c-radius-xl:    24px;
+    --c-radius-pill:  9999px;
+
+    /* Shadow */
+    --c-shadow-xs:   0 1px 3px rgba(0,0,0,.06);
+    --c-shadow-sm:   0 2px 8px rgba(0,0,0,.08);
+    --c-shadow-md:   0 4px 16px rgba(0,0,0,.10);
+    --c-shadow-lg:   0 8px 30px rgba(0,0,0,.12);
+    --c-shadow-xl:   0 16px 48px rgba(0,0,0,.14);
+
+    /* Transitions */
+    --c-transition:      all .22s ease;
+    --c-transition-fast: all .14s ease;
+    --c-transition-slow: all .35s ease;
+
+    /* Z-index layers */
+    --c-z-dropdown: 200;
+    --c-z-modal:    500;
+    --c-z-nav:      100;
+    --c-z-toast:    900;
+    --c-z-overlay:  800;
+
+    /* Layout */
+    --c-nav-height:     72px;
+    --c-max-width:      1320px;
+    --c-content-px:     40px;
+    --c-sidebar-width:  280px;
+
+    /* Hero */
+    --c-hero-min-h:     520px;
+    --c-hero-bg:        linear-gradient(135deg, #1b5e20 0%, #2e7d32 45%, #388e3c 70%, #4caf50 100%);
+    --c-hero-overlay:   rgba(0,0,0,.22);
+}
+
+/* ── Dark Mode ────────────────────────────────────────────── */
+.customer-app[data-customer-theme="dark"],
+.customer-app.c-theme-dark,
+/* No-flash pre-apply: set on <html> before DOM is built */
+[data-ca-prefers="dark"] .customer-app {
+
+    /* Brand */
+    --c-primary:          #66bb6a;
+    --c-primary-hover:    #81c784;
+    --c-primary-light:    rgba(102,187,106,.12);
+    --c-primary-mid:      #4caf50;
+    --c-secondary:        #a1887f;
+    --c-secondary-hover:  #bcaaa4;
+    --c-secondary-light:  rgba(161,136,127,.12);
+    --c-accent:           #ffb74d;
+    --c-accent-hover:     #ffa726;
+    --c-accent-light:     rgba(255,183,77,.12);
+
+    /* Surface */
+    --c-bg:               #101c11;
+    --c-bg-alt:           #162018;
+    --c-surface:          #1a2e1b;
+    --c-surface-raised:   #223524;
+    --c-surface-overlay:  rgba(26,46,27,.97);
+
+    /* Text */
+    --c-text:             #e8f5e9;
+    --c-text-muted:       #7fa880;
+    --c-text-inverse:     #1a2e1b;
+    --c-text-on-primary:  #101c11;
+    --c-text-on-accent:   #101c11;
+    --c-link:             #66bb6a;
+    --c-link-hover:       #81c784;
+
+    /* Borders */
+    --c-border:           #2e4a30;
+    --c-border-muted:     #223524;
+    --c-border-focus:     #66bb6a;
+
+    /* Semantic */
+    --c-success:          #66bb6a;
+    --c-success-bg:       rgba(102,187,106,.14);
+    --c-warning:          #ffb74d;
+    --c-warning-bg:       rgba(255,183,77,.14);
+    --c-danger:           #ef9a9a;
+    --c-danger-bg:        rgba(239,154,154,.14);
+    --c-info:             #4fc3f7;
+    --c-info-bg:          rgba(79,195,247,.14);
+
+    /* Price */
+    --c-price:            #81c784;
+    --c-price-old:        #546e54;
+    --c-price-badge:      rgba(102,187,106,.14);
+
+    /* Badge / availability */
+    --c-badge-available:  #66bb6a;
+    --c-badge-available-bg: rgba(102,187,106,.16);
+    --c-badge-unavail:    #546e54;
+    --c-badge-unavail-bg: rgba(84,110,84,.16);
+    --c-badge-low:        #ffb74d;
+    --c-badge-low-bg:     rgba(255,183,77,.16);
+
+    /* Navigation */
+    --c-nav-bg:           #1a2e1b;
+    --c-nav-border:       #2e4a30;
+    --c-nav-shadow:       0 2px 16px rgba(0,0,0,.35);
+    --c-nav-text:         #e8f5e9;
+    --c-nav-text-muted:   #7fa880;
+    --c-nav-active:       #66bb6a;
+
+    /* Card */
+    --c-card-bg:          #1a2e1b;
+    --c-card-border:      #2e4a30;
+    --c-card-shadow:      0 2px 12px rgba(0,0,0,.3);
+    --c-card-shadow-hover:0 8px 28px rgba(0,0,0,.45);
+
+    /* Input */
+    --c-input-bg:         #162018;
+    --c-input-border:     #2e4a30;
+    --c-input-border-focus:#66bb6a;
+    --c-input-placeholder:#4a6e4b;
+    --c-input-text:       #e8f5e9;
+    --c-input-shadow-focus:0 0 0 3px rgba(102,187,106,.18);
+
+    /* Button */
+    --c-btn-primary-bg:      #4caf50;
+    --c-btn-primary-text:    #101c11;
+    --c-btn-primary-hover:   #66bb6a;
+    --c-btn-secondary-bg:    transparent;
+    --c-btn-secondary-text:  #66bb6a;
+    --c-btn-secondary-border:#66bb6a;
+    --c-btn-secondary-hover: rgba(102,187,106,.1);
+    --c-btn-accent-bg:       #ffb74d;
+    --c-btn-accent-text:     #101c11;
+    --c-btn-accent-hover:    #ffa726;
+
+    /* Shadow (darker) */
+    --c-shadow-xs:   0 1px 3px rgba(0,0,0,.3);
+    --c-shadow-sm:   0 2px 8px rgba(0,0,0,.35);
+    --c-shadow-md:   0 4px 16px rgba(0,0,0,.4);
+    --c-shadow-lg:   0 8px 30px rgba(0,0,0,.48);
+    --c-shadow-xl:   0 16px 48px rgba(0,0,0,.55);
+
+    /* Hero */
+    --c-hero-bg:     linear-gradient(135deg, #0a1a0b 0%, #101c11 45%, #162018 70%, #1a2e1b 100%);
+    --c-hero-overlay:rgba(0,0,0,.45);
+}

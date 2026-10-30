@@ -1,0 +1,235 @@
+/*
+ * =========================================================
+ * ARSI AGRI-MANAGE (AAM)
+ * File     : public/assets/css/print.css
+ * Purpose  : Print-specific stylesheet.
+ *            Applied via <link media="print"> and the
+ *            print layout template.
+ *            Optimized for thermal receipt printers (80mm)
+ *            and A4 report printing.
+ * =========================================================
+ */
+
+/* ─── Reset for print ─────────────────────────────────────────────────────── */
+@media print {
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+
+    body {
+        background: #fff !important;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 11px;
+        color: #000;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Hide everything not meant to print */
+    #topbar,
+    #sidebar,
+    .breadcrumb-wrapper,
+    .print-actions,
+    .no-print,
+    .btn,
+    .alert,
+    footer,
+    nav,
+    .footer {
+        display: none !important;
+    }
+
+    /* Remove shadows and borders from cards */
+    .card {
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 4px 6px;
+        font-size: 10px;
+    }
+
+    th {
+        background: #f0f0f0 !important;
+        font-weight: bold;
+    }
+
+    /* Page breaks */
+    .page-break-before { page-break-before: always; }
+    .page-break-after  { page-break-after: always; }
+    .no-break          { break-inside: avoid; }
+
+    /* Links — show URL after */
+    a[href]:after { content: none; }
+}
+
+/* ─── Thermal Receipt (80mm) ────────────────────────────────────────────────── */
+.receipt {
+    width: 72mm;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11px;
+    color: #000;
+}
+
+.receipt .receipt-header {
+    text-align: center;
+    border-bottom: 1px dashed #000;
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+}
+
+.receipt .receipt-header .org { font-size: 13px; font-weight: 700; text-transform: uppercase; }
+.receipt .receipt-header .sys { font-size: 10px; }
+
+.receipt .receipt-meta {
+    font-size: 10px;
+    margin-bottom: 8px;
+}
+
+.receipt .receipt-meta table {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+}
+
+.receipt .receipt-meta td {
+    border: none;
+    padding: 1px 0;
+    font-size: 10px;
+}
+
+.receipt .receipt-items {
+    border-top: 1px dashed #000;
+    border-bottom: 1px dashed #000;
+    padding: 6px 0;
+    margin-bottom: 6px;
+}
+
+.receipt .receipt-items table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.receipt .receipt-items th {
+    font-size: 10px;
+    font-weight: 700;
+    border-bottom: 1px solid #000;
+    padding: 2px 0;
+    background: none;
+}
+
+.receipt .receipt-items td {
+    font-size: 11px;
+    padding: 2px 0;
+    border: none;
+    vertical-align: top;
+}
+
+.receipt .receipt-totals {
+    border-top: 1px dashed #000;
+    padding-top: 6px;
+    margin-top: 4px;
+}
+
+.receipt .receipt-totals table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.receipt .receipt-totals td {
+    border: none;
+    padding: 2px 0;
+    font-size: 11px;
+}
+
+.receipt .receipt-totals .total-row td {
+    font-weight: 700;
+    font-size: 13px;
+    border-top: 1px solid #000;
+}
+
+.receipt .receipt-footer {
+    text-align: center;
+    border-top: 1px dashed #000;
+    margin-top: 8px;
+    padding-top: 6px;
+    font-size: 10px;
+}
+
+/* ─── A4 Report Print ─────────────────────────────────────────────────────────── */
+.report-print {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 12px;
+}
+
+.report-print .report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+}
+
+.report-print .report-title {
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.report-print .report-subtitle {
+    font-size: 11px;
+    color: #555;
+}
+
+.report-print table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+}
+
+.report-print th {
+    background: #e0e0e0 !important;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    padding: 4px 6px;
+    border: 1px solid #999;
+}
+
+.report-print td {
+    padding: 4px 6px;
+    border: 1px solid #ccc;
+    font-size: 11px;
+    vertical-align: middle;
+}
+
+.report-print tr:nth-child(even) td {
+    background: #f8f8f8;
+}
+
+.report-print .report-footer {
+    border-top: 1px solid #ccc;
+    margin-top: 20px;
+    padding-top: 8px;
+    font-size: 10px;
+    color: #777;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* ─── Text alignment utilities for print ──────────────────────────────────── */
+.text-right-print { text-align: right !important; }
+.text-center-print { text-align: center !important; }
+.bold-print { font-weight: 700 !important; }

@@ -1,0 +1,432 @@
+/*
+ * =========================================================
+ * ARSI AGRI-MANAGE (AAM)
+ * =========================================================
+ * File    : public/assets/css/organization.css
+ * Purpose : Organization Management Module styles.
+ *           Covers: Dashboard, Farms, Warehouses, Shops,
+ *           Locations, Assignments, Hierarchy view.
+ * Deps    : app.css (Bootstrap 5 base)
+ * =========================================================
+ */
+
+/* ─── Org Module KPI Strip ────────────────────────────────── */
+.org-kpi-card {
+    border-radius: 10px;
+    border: none;
+    transition: box-shadow 0.18s ease-in-out, transform 0.18s ease-in-out;
+    overflow: hidden;
+    position: relative;
+}
+.org-kpi-card:hover {
+    box-shadow: 0 6px 24px rgba(0,0,0,.12);
+    transform: translateY(-2px);
+}
+.org-kpi-card .kpi-icon-wrap {
+    width:  52px;
+    height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+.org-kpi-card .kpi-num {
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #212529;
+}
+.org-kpi-card .kpi-label {
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: #6c757d;
+    font-weight: 500;
+}
+.org-kpi-card .kpi-sub {
+    font-size: .78rem;
+    color: #6c757d;
+}
+
+/* Color accents */
+.kpi-farm       { border-left: 4px solid #198754; }
+.kpi-warehouse  { border-left: 4px solid #0d6efd; }
+.kpi-shop       { border-left: 4px solid #fd7e14; }
+.kpi-location   { border-left: 4px solid #6f42c1; }
+.kpi-assignment { border-left: 4px solid #0dcaf0; }
+
+/* ─── Entity Type Badges ─────────────────────────────────── */
+.type-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .3em;
+    padding: .22em .65em;
+    border-radius: 20px;
+    font-size: .72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    white-space: nowrap;
+}
+/* Farm types */
+.type-crop        { background: #d1e7dd; color: #0f5132; }
+.type-livestock   { background: #cff4fc; color: #055160; }
+.type-mixed       { background: #e2e3e5; color: #41464b; }
+.type-dairy       { background: #d0e0ff; color: #0842a0; }
+.type-poultry     { background: #fff3cd; color: #856404; }
+.type-horticulture{ background: #d1e7dd; color: #0a3622; }
+/* Warehouse types */
+.type-central        { background: #cfe2ff; color: #084298; }
+.type-cold_storage   { background: #cff4fc; color: #055160; }
+.type-dry_storage    { background: #fff3cd; color: #856404; }
+.type-bonded         { background: #f8d7da; color: #842029; }
+.type-distribution   { background: #d1e7dd; color: #0f5132; }
+/* Shop types */
+.type-retail     { background: #fde8d0; color: #7c3700; }
+.type-cafeteria  { background: #d1e7dd; color: #0f5132; }
+.type-kiosk      { background: #e8d5f5; color: #3b1a6b; }
+.type-outlet     { background: #cfe2ff; color: #084298; }
+.type-mobile     { background: #fff3cd; color: #856404; }
+
+/* ─── Status Pill ────────────────────────────────────────── */
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: .3em;
+    padding: .18em .55em;
+    border-radius: 20px;
+    font-size: .75rem;
+    font-weight: 600;
+}
+.status-pill.active   { background: #d1e7dd; color: #0f5132; }
+.status-pill.inactive { background: #e2e3e5; color: #41464b; }
+
+/* ─── Organization Table ─────────────────────────────────── */
+.org-table th {
+    font-size: .78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: #6c757d;
+    background: #f8f9fa;
+    white-space: nowrap;
+}
+.org-table td { font-size: .875rem; vertical-align: middle; }
+.org-table .entity-code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: .75rem;
+    color: #6c757d;
+    background: #f4f6fb;
+    padding: .15em .5em;
+    border-radius: 4px;
+}
+.org-table .entity-name {
+    font-weight: 600;
+    color: #212529;
+}
+.org-table .entity-name a { color: inherit; text-decoration: none; }
+.org-table .entity-name a:hover { color: #0d6efd; text-decoration: underline; }
+.org-table .entity-meta {
+    font-size: .75rem;
+    color: #6c757d;
+}
+.org-table .action-col {
+    white-space: nowrap;
+    text-align: right;
+}
+
+/* ─── Filter Bar ─────────────────────────────────────────── */
+.filter-bar {
+    background: #fff;
+    border: 1px solid #e8ecf0;
+    border-radius: 10px;
+    padding: .75rem 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+
+/* ─── Empty State ────────────────────────────────────────── */
+.empty-state {
+    text-align: center;
+    padding: 3.5rem 2rem;
+    color: #adb5bd;
+}
+.empty-state .empty-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    opacity: .35;
+    display: block;
+}
+.empty-state h6 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #6c757d;
+    margin-bottom: .5rem;
+}
+
+/* ─── Detail Page ────────────────────────────────────────── */
+.detail-card {
+    border: 1px solid #e8ecf0;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+.detail-card .detail-header {
+    background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+    color: #fff;
+    padding: 1.5rem;
+}
+.detail-card .detail-header.farm-header    { background: linear-gradient(135deg, #198754 0%, #146c43 100%); }
+.detail-card .detail-header.warehouse-header { background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%); }
+.detail-card .detail-header.shop-header    { background: linear-gradient(135deg, #fd7e14 0%, #d96f00 100%); }
+
+.detail-card .detail-code {
+    font-size: .8rem;
+    opacity: .8;
+    font-family: monospace;
+    letter-spacing: .05em;
+}
+.detail-card .detail-title { font-size: 1.4rem; font-weight: 700; }
+
+.detail-meta-item {
+    display: flex;
+    align-items: flex-start;
+    gap: .75rem;
+    padding: .6rem 0;
+    border-bottom: 1px solid #f0f2f5;
+}
+.detail-meta-item:last-child { border-bottom: none; }
+.detail-meta-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .9rem;
+    flex-shrink: 0;
+}
+.detail-meta-label {
+    font-size: .75rem;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    font-weight: 500;
+}
+.detail-meta-value { font-size: .9rem; font-weight: 500; color: #212529; }
+
+/* ─── Hierarchy Tree ─────────────────────────────────────── */
+.hierarchy-tree {
+    position: relative;
+}
+.hierarchy-node {
+    position: relative;
+    padding-left: 2rem;
+}
+.hierarchy-node::before {
+    content: '';
+    position: absolute;
+    left: .7rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #dee2e6;
+}
+.hierarchy-node:last-child::before {
+    height: 1.2rem;
+}
+.hierarchy-node-inner::before {
+    content: '';
+    position: absolute;
+    left: .7rem;
+    top: 50%;
+    width: 1.3rem;
+    height: 2px;
+    background: #dee2e6;
+}
+.hierarchy-card {
+    border: 1px solid #e8ecf0;
+    border-radius: 8px;
+    padding: .6rem .85rem;
+    background: #fff;
+    transition: box-shadow 0.15s;
+    cursor: pointer;
+}
+.hierarchy-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,.1);
+    border-color: #0d6efd;
+}
+.hierarchy-card.level-org  { background: #f0f4ff; border-color: #0d6efd; }
+.hierarchy-card.level-farm { border-left: 3px solid #198754; }
+.hierarchy-card.level-wh   { border-left: 3px solid #0d6efd; }
+.hierarchy-card.level-shop { border-left: 3px solid #fd7e14; }
+
+.hierarchy-connector {
+    width: 24px;
+    height: 2px;
+    background: #dee2e6;
+    margin-top: .85rem;
+}
+
+/* ─── Assignment Badge ───────────────────────────────────── */
+.assign-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .35em;
+    padding: .25em .7em;
+    background: #e7f3ff;
+    color: #084298;
+    border-radius: 20px;
+    font-size: .75rem;
+    font-weight: 600;
+}
+.assign-badge.farm      { background: #d1e7dd; color: #0f5132; }
+.assign-badge.warehouse { background: #cfe2ff; color: #084298; }
+.assign-badge.shop      { background: #fde8d0; color: #7c3700; }
+
+/* ─── Loading Overlay ────────────────────────────────────── */
+.loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(255,255,255,.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    backdrop-filter: blur(2px);
+}
+
+/* ─── GPS / Map Badge ────────────────────────────────────── */
+.gps-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .3em;
+    font-size: .75rem;
+    color: #6c757d;
+    background: #f4f6fb;
+    padding: .15em .55em;
+    border-radius: 6px;
+    font-family: monospace;
+}
+
+/* ─── Form Section Header ────────────────────────────────── */
+.form-section-title {
+    font-size: .78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: #6c757d;
+    padding: .5rem 0 .35rem;
+    border-bottom: 2px solid #f0f2f5;
+    margin-bottom: .75rem;
+}
+
+/* ─── Operating Hours ────────────────────────────────────── */
+.hours-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .35em;
+    font-size: .78rem;
+    padding: .2em .6em;
+    border-radius: 6px;
+    background: #fff3cd;
+    color: #856404;
+    font-weight: 500;
+}
+
+/* ─── Capacity bar ───────────────────────────────────────── */
+.capacity-label {
+    font-size: .75rem;
+    color: #6c757d;
+}
+
+/* ─── Tab Pills ──────────────────────────────────────────── */
+.org-tab-pills .nav-link {
+    border-radius: 8px;
+    font-size: .82rem;
+    font-weight: 500;
+    color: #6c757d;
+    padding: .4rem .85rem;
+    transition: all 0.15s;
+}
+.org-tab-pills .nav-link:hover { background: #f0f4ff; color: #0d6efd; }
+.org-tab-pills .nav-link.active { background: #0d6efd; color: #fff; font-weight: 600; }
+
+/* ─── Sidebar Organisation Item ──────────────────────────── */
+.sidebar-org-link {
+    color: rgba(255,255,255,.75);
+    border-radius: 8px;
+    padding: .5rem .75rem;
+    font-size: .875rem;
+    display: flex;
+    align-items: center;
+    transition: background 0.18s;
+}
+.sidebar-org-link:hover { background: rgba(255,255,255,.08); color: #fff; text-decoration: none; }
+.sidebar-org-link.active { background: #0d6efd !important; color: #fff !important; font-weight: 600; }
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 767.98px) {
+    .org-kpi-card .kpi-num { font-size: 1.35rem; }
+    .org-table .d-flex.gap-1 { gap: 2px !important; }
+    .detail-card .detail-header { padding: 1rem; }
+    .detail-card .detail-title { font-size: 1.15rem; }
+}
+
+/* ==========================================================
+ * Organization — Responsive Enhancements
+ * ==========================================================
+ */
+
+/* Org tab pills: scrollable on mobile */
+@media (max-width: 767.98px) {
+    .org-tab-pills {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 2px;
+    }
+    .org-tab-pills::-webkit-scrollbar { display: none; }
+    .org-tab-pills .nav-link {
+        white-space: nowrap;
+        font-size: .78rem;
+        padding: .35rem .65rem;
+    }
+}
+
+/* Org detail header: stack on small screens */
+@media (max-width: 575.98px) {
+    .detail-card .detail-header.d-flex {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: .5rem;
+    }
+    .detail-card .detail-header .d-flex.gap-2 {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    .detail-card .detail-header .btn {
+        flex: 1 1 auto;
+    }
+}
+
+/* Assignment tables: allow horizontal scroll */
+@media (max-width: 767.98px) {
+    .org-table {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* Hierarchy view: make tree scrollable horizontally */
+@media (max-width: 767.98px) {
+    .org-hierarchy,
+    .org-tree-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}

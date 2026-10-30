@@ -1,0 +1,1041 @@
+/*
+ * ============================================================
+ * AU-AgroSale — Order Confirmation / Success Page CSS
+ * public/assets/customer/css/success.css
+ * ============================================================
+ * Phase 7 — Premium order confirmation UI.
+ * ALL rules scoped inside .customer-app — zero admin bleed.
+ * Prefix: csc- (Customer Success Confirmation)
+ * ============================================================
+ */
+
+/* ══════════════════════════════════════════════════════════
+   SUCCESS HERO SECTION
+   ══════════════════════════════════════════════════════════ */
+.customer-app .csc-hero {
+    background: linear-gradient(
+        160deg,
+        var(--c-primary) 0%,
+        #388e3c 50%,
+        #4caf50 100%
+    );
+    padding: var(--c-space-12) 0 var(--c-space-16);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle decorative background circles */
+.customer-app .csc-hero::before,
+.customer-app .csc-hero::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,.06);
+    pointer-events: none;
+}
+.customer-app .csc-hero::before {
+    width: 480px;
+    height: 480px;
+    top: -200px;
+    right: -100px;
+}
+.customer-app .csc-hero::after {
+    width: 320px;
+    height: 320px;
+    bottom: -140px;
+    left: -80px;
+}
+
+.customer-app .csc-hero__inner {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--c-space-5);
+}
+
+/* ── Animated icon ────────────────────────────────────── */
+.customer-app .csc-hero__icon-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+}
+
+.customer-app .csc-hero__icon {
+    position: relative;
+    z-index: 2;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.4rem;
+    animation: cscIconPop .6s cubic-bezier(.34,1.56,.64,1) both;
+}
+
+.customer-app .csc-hero__icon--success {
+    background: rgba(255,255,255,.2);
+    color: #fff;
+    border: 3px solid rgba(255,255,255,.5);
+}
+.customer-app .csc-hero__icon--pending {
+    background: rgba(255,183,77,.25);
+    color: #fff;
+    border: 3px solid rgba(255,183,77,.5);
+}
+
+@keyframes cscIconPop {
+    from { transform: scale(.2); opacity: 0; }
+    to   { transform: scale(1);  opacity: 1; }
+}
+
+/* Ripple rings around icon */
+.customer-app .csc-hero__ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.25);
+    transform: translate(-50%,-50%);
+    pointer-events: none;
+    animation: cscRipple 2.5s ease-out infinite;
+}
+.customer-app .csc-hero__ring--1 {
+    width: 110px;
+    height: 110px;
+    animation-delay: 0s;
+}
+.customer-app .csc-hero__ring--2 {
+    width: 145px;
+    height: 145px;
+    animation-delay: .6s;
+}
+
+@keyframes cscRipple {
+    0%   { opacity: .8; transform: translate(-50%,-50%) scale(.8); }
+    100% { opacity: 0;  transform: translate(-50%,-50%) scale(1.5); }
+}
+
+/* ── Title + subtitle ─────────────────────────────────── */
+.customer-app .csc-hero__title {
+    font-size: clamp(var(--c-size-2xl), 4vw, var(--c-size-5xl));
+    font-weight: var(--c-weight-extrabold);
+    color: #fff;
+    margin: 0;
+    letter-spacing: -0.02em;
+    line-height: var(--c-leading-tight);
+    text-shadow: 0 2px 12px rgba(0,0,0,.15);
+}
+
+.customer-app .csc-hero__sub {
+    font-size: var(--c-size-base);
+    color: rgba(255,255,255,.88);
+    margin: 0;
+    max-width: 560px;
+    line-height: var(--c-leading-base);
+}
+.customer-app .csc-hero__br { display: block; }
+
+/* ── Hero chips ───────────────────────────────────────── */
+.customer-app .csc-hero__chips {
+    display: flex;
+    gap: var(--c-space-2);
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: var(--c-space-2);
+}
+
+.customer-app .csc-hero__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px;
+    border-radius: var(--c-radius-pill);
+    font-size: var(--c-size-sm);
+    font-weight: var(--c-weight-semi);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1.5px solid;
+    transition: var(--c-transition-fast);
+    animation: cscFadeUp .5s ease both;
+}
+
+.customer-app .csc-hero__chip--ref {
+    background: rgba(255,255,255,.18);
+    color: #fff;
+    border-color: rgba(255,255,255,.35);
+    font-family: var(--c-font-mono);
+    font-size: var(--c-size-xs);
+    letter-spacing: .04em;
+}
+.customer-app .csc-hero__chip--success {
+    background: rgba(76,175,80,.2);
+    color: #fff;
+    border-color: rgba(129,199,132,.5);
+}
+.customer-app .csc-hero__chip--warning {
+    background: rgba(255,183,77,.2);
+    color: #fff;
+    border-color: rgba(255,183,77,.45);
+}
+.customer-app .csc-hero__chip--shop {
+    background: rgba(255,255,255,.14);
+    color: rgba(255,255,255,.9);
+    border-color: rgba(255,255,255,.28);
+}
+
+.customer-app .csc-hero__chip:nth-child(2) { animation-delay: .12s; }
+.customer-app .csc-hero__chip:nth-child(3) { animation-delay: .22s; }
+
+@keyframes cscFadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ══════════════════════════════════════════════════════════
+   MAIN LAYOUT — 2-column on desktop, 1-column on mobile
+   ══════════════════════════════════════════════════════════ */
+.customer-app .csc-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: var(--c-space-8);
+    align-items: start;
+    padding-top: var(--c-space-8);
+    padding-bottom: var(--c-space-12);
+    /* Pull content up slightly over the hero bottom */
+    margin-top: calc(-1 * var(--c-space-8));
+}
+
+.customer-app .csc-main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-space-5);
+    min-width: 0;
+}
+
+.customer-app .csc-side {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-space-5);
+    position: sticky;
+    top: calc(var(--c-nav-height) + var(--c-space-4));
+}
+
+/* ══════════════════════════════════════════════════════════
+   CARD COMPONENT (csc-card)
+   ══════════════════════════════════════════════════════════ */
+.customer-app .csc-card {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--c-radius-xl);
+    overflow: hidden;
+    box-shadow: var(--c-shadow-md);
+    transition: var(--c-transition);
+}
+.customer-app .csc-card:hover {
+    box-shadow: var(--c-shadow-lg);
+}
+
+.customer-app .csc-card__head {
+    display: flex;
+    align-items: center;
+    gap: var(--c-space-3);
+    padding: var(--c-space-4) var(--c-space-6);
+    font-size: var(--c-size-sm);
+    font-weight: var(--c-weight-semi);
+    color: var(--c-text);
+    background: var(--c-bg-alt);
+    border-bottom: 1px solid var(--c-border-muted);
+}
+.customer-app .csc-card__head i {
+    color: var(--c-primary);
+    font-size: 16px;
+}
+.customer-app .csc-card__head-count {
+    margin-left: auto;
+    font-size: var(--c-size-xs);
+    color: var(--c-text-muted);
+    font-weight: var(--c-weight-normal);
+    background: var(--c-border-muted);
+    padding: 2px 8px;
+    border-radius: var(--c-radius-pill);
+}
+
+/* ── Pickup card accent left border ──────────────────── */
+.customer-app .csc-card--pickup {
+    border-left: 3px solid var(--c-primary);
+}
+.customer-app .csc-card--qr {
+    text-align: center;
+}
+.customer-app .csc-card--instructions .csc-card__head {
+    background: var(--c-primary-light);
+    border-color: rgba(46,125,50,.15);
+}
+.customer-app .csc-card--instructions .csc-card__head i {
+    color: var(--c-primary);
+}
+
+/* ══════════════════════════════════════════════════════════
+   ORDER SUMMARY — DETAIL ROWS
+   ══════════════════════════════════════════════════════════ */
+.customer-app .csc-detail-rows {
+    padding: 0 var(--c-space-6);
+}
+
+.customer-app .csc-detail-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--c-space-4);
+    padding: var(--c-space-3) 0;
+    font-size: var(--c-size-sm);
+    border-bottom: 1px solid var(--c-border-muted);
+}
+.customer-app .csc-detail-row:last-child {
+    border-bottom: none;
+    padding-bottom: var(--c-space-5);
+}
+
+.customer-app .csc-detail-row__label {
+    color: var(--c-text-muted);
+    flex-shrink: 0;
+}
+.customer-app .csc-detail-row__val {
+    font-weight: var(--c-weight-semi);
+    color: var(--c-text);
+    text-align: right;
+}
+
+.customer-app .csc-detail-row--total {
+    margin-top: var(--c-space-2);
+    padding-top: var(--c-space-4);
+    border-top: 2px solid var(--c-border);
+}
+.customer-app .csc-detail-row--total .csc-detail-row__label {
+    font-size: var(--c-size-base);
+    font-weight: var(--c-weight-semi);
+    color: var(--c-text);
+}
+
+/* ── Monospace ref display ────────────────────────────── */
+.customer-app .csc-mono {
+    font-family: var(--c-font-mono);
+    font-size: var(--c-size-sm);
+    color: var(--c-primary);
+    letter-spacing: .03em;
+}
+
+/* ── Price display ────────────────────────────────────── */
+.customer-app .csc-price {
+    font-size: var(--c-size-xl);
+    font-weight: var(--c-weight-extrabold);
+    color: var(--c-price);
+    font-feature-settings: "tnum";
+    letter-spacing: -0.01em;
+}
+
+/* ── Status badge ─────────────────────────────────────── */
+.customer-app .csc-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    border-radius: var(--c-radius-pill);
+    font-size: var(--c-size-xs);
+    font-weight: var(--c-weight-semi);
+    letter-spacing: .03em;
+}
+.customer-app .csc-badge--success {
+    background: var(--c-success-bg);
+    color: var(--c-success);
+    border: 1px solid rgba(46,125,50,.2);
+}
+.customer-app .csc-badge--warning {
+    background: var(--c-warning-bg);
+    color: var(--c-warning);
+    border: 1px solid rgba(245,127,23,.2);
+}
+.customer-app .csc-badge--info {
+    background: var(--c-info-bg);
+    color: var(--c-info);
+    border: 1px solid rgba(2,119,189,.2);
+}
+.customer-app .csc-badge--secondary {
+    background: var(--c-bg-alt);
+    color: var(--c-text-muted);
+    border: 1px solid var(--c-border);
+}
+
+/* ══════════════════════════════════════════════════════════
+   ORDERED ITEMS LIST
+   ══════════════════════════════════════════════════════════ */
+.customer-app .csc-items-list {
+    list-style: none;
+    margin: 0;
+    padding: var(--c-space-2) var(--c-space-6) 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.customer-app .csc-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--c-space-4);
+    padding: var(--c-space-4) 0;
+    border-bottom: 1px solid var(--c-border-muted);
+    transition: var(--c-transition-fast);
+}
+.customer-app .csc-item:last-child {
+    border-bottom: none;
+}
+.customer-app .csc-item:hover {
+    background: var(--c-bg-alt);
+    margin-left: calc(-1 * var(--c-space-2));
+    margin-right: calc(-1 * var(--c-space-2));
+    padding-left: var(--c-space-2);
+    padding-right: var(--c-space-2);
+    border-radius: var(--c-radius-md);
+}
+
+/* Product thumbnail */
+.customer-app .csc-item__img {
+    width: 68px;
+    height: 68px;
+    border-radius: var(--c-radius-md);
+    background: var(--c-bg-alt);
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 1px solid var(--c-border-muted);
+}
+.customer-app .csc-item__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.customer-app .csc-item__img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    background: var(--c-bg-alt);
+}
+
+/* Product info */
+.customer-app .csc-item__info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-space-1);
+    padding-top: 2px;
+}
+.customer-app .csc-item__name {
+    font-size: var(--c-size-sm);
+    font-weight: var(--c-weight-semi);
+    color: var(--c-text);
+    line-height: var(--c-leading-snug);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.customer-app .csc-item__meta {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: var(--c-size-xs);
+    color: var(--c-text-muted);
+    flex-wrap: wrap;
+}
+.customer-app .csc-item__meta-sep {
+    opacity: .5;
+}
+
+/* Subtotal */
+.customer-app .csc-item__subtotal {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    flex-shrink: 0;
+    padding-top: 2px;
+}
+.customer-app .csc-item__subtotal-label {
+    font-size: 10px;
+    color: var(--c-text-muted);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    font-weight: var(--c-weight-medium);
+}
+.customer-app .csc-item__subtotal-val {
+    font-size: var(--c-size-sm);
+    font-weight: var(--c-weight-bold);
+    color: var(--c-text);
+    font-feature-settings: "tnum";
+    white-space: nowrap;
+}
+
+/* ── Price summary footer ─────────────────────────────── */
+.customer-app .csc-price-summary {
+    padding: var(--c-space-4) var(--c-space-6);
+    border-top: 1px solid var(--c-border-muted);
+    background: var(--c-bg-alt);
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-space-2);
+}
+.customer-app .csc-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--c-size-sm);
+    color: var(--c-text-muted);
+    font-feature-settings: "tnum";
+}
+.customer-app .csc-price-row i {
+    font-size: 12px;
+    margin-right: 3px;
+    color: var(--c-success);
+}
+.customer-app .csc-price-paid {
+    color: var(--c-success);
+    font-weight: var(--c-weight-semi);
+}
+.customer-app .csc-price-row--paid {
+    color: var(--c-success);
+}
+.customer-app .csc-price-row--total {
+    padding-top: var(--c-space-2);
+    border-top: 1.5px solid var(--c-border);
+    font-size: var(--c-size-base);
+    color: var(--c-text);
+}
+.customer-app .csc-price-row--total .csc-price {
+    font-size: var(--c-size-xl);
+}
+
+/* ══════════════════════════════════════════════════════════
+   PICKUP INSTRUCTIONS LIST
+   ══════════════════════════════════════════════════════════ */
+.customer-app .csc-steps-list {
+    list-style: none;
+    margin: 0;
+    padding: var(--c-space-5) var(--c-space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-space-4);
+    counter-reset: none;
+}
+
+.customer-app .csc-steps-list__item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--c-space-4);
+}
+
+.customer-app .csc-steps-list__num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--c-primary);
+    color: #fff;
+    font-size: var(--c-size-sm);
+    font-weight: var(--c-weight-bold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(46,125,50,.25);
+}
+
+.customer-app .csc-steps-list__text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding-top: 4px;
+    flex: 1;
+}
+.customer-app .csc-steps-list__text strong {
+    font-size: var(--c-size-sm);
+    font-weight: var(--c-weight-semi);
+    color: var(--c-text);
+    line-height: var(--c-leading-snug);
+}
+.customer-app .csc-steps-list__text span {
+    font-size: var(--c-size-xs);
+    color: var(--c-text-muted);
+    line-height: var(--c-leading-base);
+}
+
+/* ── Notice strip ─────────────────────────────────────── */
+.customer-app .csc-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--c-space-3);
+    padding: var(--c-space-3) var(--c-space-6) var(--c-space-5);
+    font-size: var(--c-size-xs);
+    color: var(--c-text-muted);
+    line-height: var(--c-leading-base);
+}
+.customer-app .csc-notice i {
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+.customer-app .csc-notice p {
+    margin: 0;
+}
+.customer-app .csc-notice--warning i {
+    color: var(--c-warning);
+}
+
+/* ══════════════════════════════════════════════════════════
+   PICKUP SHOP INFO (sidebar)
+   ══════════════════════════════════════════════════════════ */
+.customer-app .csc-pickup-shop {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--c-space-4);
+    padding: var(--c-space-5) var(--c-space-6) var(--c-space-4);
+}
+.customer-app .csc-pickup-shop__icon {
+    width: 46px;
+    height: 46px;
+    background: var(--c-primary);
+    color: #fff;
+    border-radius: var(--c-radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 10px rgba(46,125,50,.28);
+}
+.customer-app .csc-pickup-shop__info {
+    flex: 1;
+    min-width: 0;
+    padding-top: 2px;
+}
+.customer-app .csc-pickup-shop__name {
+    font-size: var(--c-size-base);
+    font-weight: var(--c-weight-bold);
+    color: var(--c-text);
+    margin-bottom: 3px;
+    line-height: var(--c-leading-snug);
+}
+.customer-app .csc-pickup-shop__location {
+    font-size: var(--c-size-xs);
+    color: var(--c-text-muted);
+}
+
+/* ── Pickup status badge ──────────────────────────────── */
+.customer-app .csc-pickup-status {
+    padding: 0 var(--c-space-6) var(--c-space-4);
+}
+.customer-app .csc-pickup-status__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 16px;
+    border-radius: var(--c-radius-pill);
+    font-size: var(--c-size-sm);
+    font-weight: var(--c-weight-semi);
+    margin-bottom: var(--c-space-2);
+}
+.customer-app .csc-pickup-status__badge--ready {
+    background: var(--c-success-bg);
+    color: var(--c-success);
+    border: 1px solid rgba(46,125,50,.25);
+    animation: cscPulseGreen 2s ease-in-out infinite;
+}
+@keyframes cscPulseGreen {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(46,125,50,.3); }
+    50%       { box-shadow: 0 0 0 6px rgba(46,125,50,0); }
+}
+.customer-app .csc-pickup-status__badge--preparing {
+    background: var(--c-info-bg);
+    color: var(--c-info);
+    border: 1px solid rgba(2,119,189,.2);
+}
+.customer-app .csc-pickup-status__badge--pending {
+    background: var(--c-warning-bg);
+    color: var(--c-warning);
+    border: 1px solid rgba(245,127,23,.2);
+}
+.customer-app .csc-pickup-status__note {
+    font-size: var(--c-size-xs);
+    color: var(--c-text-muted);
+    margin: 0;
+    line-height: var(--c-leading-base);
+}
+
+/* Pickup instruction strip */
+.customer-app .csc-pickup-instruction {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--c-space-2);
+    padding: var(--c-space-3) var(--c-space-6) var(--c-space-5);
+    background: var(--c-primary-light);
+    border-top: 1px solid rgba(46,125,50,.12);
+    font-size: var(--c-size-xs);
+    color: var(--c-text-muted);
+    line-height: var(--c-leading-base);
+}
+.customer-app .csc-pickup-instruction i {
+    color: var(--c-primary);
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+.customer-app .csc-pickup-instruction p {
+    margin: 0;
+}
+
+/* ══════════════════════════════════════════════════════════
+   QR CODE CARD
+   ══════════════════════════════════════════════════════════ */
+.customer-app .csc-qr-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--c-space-3);
+    padding: var(--c-space-6) var(--c-space-6) var(--c-space-5);
+}
+
+.customer-app .csc-qr-canvas {
+    width: 196px;
+    height: 196px;
+    background: #fff;
+    border: 3px solid var(--c-border);
+    border-radius: var(--c-radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: var(--c-space-2);
+    box-shadow: var(--c-shadow-sm);
+    transition: var(--c-transition);
+}
+.customer-app .csc-qr-canvas:hover {
+    box-shadow: var(--c-shadow-md);
+    transform: scale(1.02);
+}
+/* Fallback when QRCode lib is unavailable */
+.customer-app .csc-qr-canvas--fallback {
+    font-family: var(--c-font-mono);
+    font-size: var(--c-size-xs);
+    color: var(--c-text-muted);
+    word-break: break-all;
+    padding: var(--c-space-4);
+    text-align: center;
+    line-height: var(--c-leading-base);
+}
+
+.customer-app .csc-qr-code-text {
+    font-family: var(--c-font-mono);
+    font-size: var(--c-size-sm);
+    font-weight: var(--c-weight-bold);
+    color: var(--c-primary);
+    letter-spacing: .05em;
+    background: var(--c-primary-light);
+    padding: 6px 16px;
+    border-radius: var(--c-radius-pill);
+    border: 1.5px solid rgba(46,125,50,.2);
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.customer-app .csc-qr-hint {
+    font-size: var(--c-size-xs);
+    color: var(--c-text-muted);
+    margin: 0;
+    line-height: var(--c-leading-base);
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    text-align: center;
+}
+.customer-app .csc-qr-hint i {
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: var(--c-primary);
+}
+
+/* ══════════════════════════════════════════════════════════
+   ACTION BUTTONS
+   ══════════════════════════════════════════════════════════ */
+.customer-app .csc-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-space-3);
+}
+
+.customer-app .csc-actions__btn {
+    width: 100%;
+    justify-content: center;
+}
+.customer-app .csc-actions__btn.c-btn-primary {
+    box-shadow: 0 4px 16px rgba(46,125,50,.3);
+    /* Override .customer-app a { color: var(--c-link) } — anchor specificity fix */
+    color: var(--c-btn-primary-text) !important;
+    text-decoration: none !important;
+}
+.customer-app .csc-actions__btn.c-btn-primary:hover {
+    box-shadow: 0 8px 24px rgba(46,125,50,.4);
+    color: var(--c-btn-primary-text) !important;
+}
+.customer-app .csc-actions__btn.c-btn-secondary {
+    /* Same fix for secondary button */
+    color: var(--c-btn-secondary-text) !important;
+    text-decoration: none !important;
+}
+.customer-app .csc-actions__btn.c-btn-secondary:hover {
+    color: var(--c-btn-secondary-text) !important;
+}
+
+.customer-app .csc-actions__receipt-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: var(--c-size-sm);
+    color: var(--c-text-muted);
+    text-decoration: none;
+    transition: var(--c-transition-fast);
+    padding: var(--c-space-2);
+    border-radius: var(--c-radius-md);
+}
+.customer-app .csc-actions__receipt-link:hover {
+    color: var(--c-primary);
+    background: var(--c-primary-light);
+}
+
+/* ══════════════════════════════════════════════════════════
+   TRUST STRIP
+   ══════════════════════════════════════════════════════════ */
+.customer-app .csc-trust-strip {
+    margin-top: var(--c-space-8);
+    background: var(--c-surface);
+    border-top: 1px solid var(--c-border-muted);
+    padding: var(--c-space-6) 0;
+}
+.customer-app .csc-trust-strip .cart-feature-strip__inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--c-space-6);
+    padding: 0;
+}
+.customer-app .csc-trust-strip .cart-feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--c-space-3);
+    padding: var(--c-space-4);
+    background: var(--c-bg-alt);
+    border-radius: var(--c-radius-lg);
+    border: 1px solid var(--c-border-muted);
+    transition: var(--c-transition-fast);
+}
+.customer-app .csc-trust-strip .cart-feature-item:hover {
+    border-color: rgba(46,125,50,.25);
+    box-shadow: var(--c-shadow-xs);
+}
+.customer-app .csc-trust-strip .cart-feature-item__icon {
+    font-size: 1.6rem;
+    color: var(--c-primary);
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+.customer-app .csc-trust-strip .cart-feature-item__title {
+    font-size: var(--c-size-sm);
+    font-weight: var(--c-weight-semi);
+    color: var(--c-text);
+    margin-bottom: 2px;
+    line-height: var(--c-leading-snug);
+}
+.customer-app .csc-trust-strip .cart-feature-item__desc {
+    font-size: var(--c-size-xs);
+    color: var(--c-text-muted);
+    line-height: var(--c-leading-base);
+}
+
+@media (max-width: 900px) {
+    .customer-app .csc-trust-strip .cart-feature-strip__inner {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--c-space-4);
+    }
+}
+@media (max-width: 480px) {
+    .customer-app .csc-trust-strip .cart-feature-strip__inner {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--c-space-3);
+    }
+    .customer-app .csc-trust-strip .cart-feature-item {
+        padding: var(--c-space-3);
+    }
+}
+
+/* ══════════════════════════════════════════════════════════
+   DARK MODE OVERRIDES
+   ══════════════════════════════════════════════════════════ */
+.customer-app[data-customer-theme="dark"] .csc-hero,
+.customer-app.c-theme-dark .csc-hero {
+    background: linear-gradient(160deg, #0a1a0b 0%, #101c11 50%, #162018 100%);
+}
+.customer-app[data-customer-theme="dark"] .csc-hero__icon--success,
+.customer-app.c-theme-dark .csc-hero__icon--success {
+    background: rgba(102,187,106,.18);
+    border-color: rgba(102,187,106,.4);
+}
+.customer-app[data-customer-theme="dark"] .csc-card,
+.customer-app.c-theme-dark .csc-card {
+    background: var(--c-surface);
+    border-color: var(--c-border);
+}
+.customer-app[data-customer-theme="dark"] .csc-card__head,
+.customer-app.c-theme-dark .csc-card__head {
+    background: var(--c-bg-alt);
+}
+.customer-app[data-customer-theme="dark"] .csc-item:hover,
+.customer-app.c-theme-dark .csc-item:hover {
+    background: var(--c-bg-alt);
+}
+.customer-app[data-customer-theme="dark"] .csc-price-summary,
+.customer-app.c-theme-dark .csc-price-summary {
+    background: var(--c-bg-alt);
+    border-color: var(--c-border);
+}
+.customer-app[data-customer-theme="dark"] .csc-qr-canvas,
+.customer-app.c-theme-dark .csc-qr-canvas {
+    background: #ffffff;  /* QR must stay on white */
+    border-color: var(--c-border);
+}
+.customer-app[data-customer-theme="dark"] .csc-pickup-instruction,
+.customer-app.c-theme-dark .csc-pickup-instruction {
+    background: var(--c-primary-light);
+    border-color: rgba(102,187,106,.15);
+}
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════════════ */
+
+/* ── 1024px ───────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+    .customer-app .csc-layout {
+        grid-template-columns: 1fr 340px;
+        gap: var(--c-space-6);
+    }
+}
+
+/* ── 900px — stack ─────────────────────────────────────────── */
+@media (max-width: 900px) {
+    .customer-app .csc-layout {
+        grid-template-columns: 1fr;
+        margin-top: calc(-1 * var(--c-space-4));
+    }
+    .customer-app .csc-side {
+        position: static;
+        /* On mobile: sidebar shows ABOVE main content — QR code first */
+        order: -1;
+    }
+    .customer-app .csc-hero {
+        padding: var(--c-space-10) 0 var(--c-space-12);
+    }
+}
+
+/* ── 768px ─────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .customer-app .csc-hero__title {
+        font-size: var(--c-size-2xl);
+    }
+    .customer-app .csc-hero__sub { font-size: var(--c-size-sm); }
+    .customer-app .csc-hero__br  { display: none; }
+    .customer-app .csc-hero__chip { font-size: var(--c-size-xs); padding: 5px 12px; }
+
+    .customer-app .csc-card__head,
+    .customer-app .csc-detail-rows,
+    .customer-app .csc-items-list,
+    .customer-app .csc-price-summary,
+    .customer-app .csc-steps-list,
+    .customer-app .csc-notice,
+    .customer-app .csc-pickup-shop,
+    .customer-app .csc-pickup-status,
+    .customer-app .csc-pickup-instruction,
+    .customer-app .csc-qr-wrap {
+        padding-left: var(--c-space-4);
+        padding-right: var(--c-space-4);
+    }
+
+    .customer-app .csc-layout {
+        padding-top: var(--c-space-5);
+        padding-bottom: var(--c-space-8);
+    }
+}
+
+/* ── 480px ─────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+    .customer-app .csc-hero {
+        padding: var(--c-space-8) 0 var(--c-space-10);
+    }
+    .customer-app .csc-hero__icon-wrap {
+        width: 80px;
+        height: 80px;
+    }
+    .customer-app .csc-hero__icon {
+        width: 64px;
+        height: 64px;
+        font-size: 1.8rem;
+    }
+    .customer-app .csc-hero__chips {
+        gap: var(--c-space-1);
+    }
+    .customer-app .csc-hero__chip--ref {
+        /* Hide reference chip on very small screens — shown in the card below */
+        display: none;
+    }
+    .customer-app .csc-item__img {
+        width: 52px;
+        height: 52px;
+    }
+    .customer-app .csc-qr-canvas {
+        width: 168px;
+        height: 168px;
+    }
+    .customer-app .csc-actions__btn {
+        padding: 12px var(--c-space-5);
+        font-size: var(--c-size-sm);
+    }
+}
+
+/* ── 390px ─────────────────────────────────────────────────── */
+@media (max-width: 390px) {
+    .customer-app .csc-price { font-size: var(--c-size-base); }
+    .customer-app .csc-steps-list__num {
+        width: 26px;
+        height: 26px;
+        font-size: var(--c-size-xs);
+    }
+    .customer-app .csc-detail-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--c-space-1);
+    }
+    .customer-app .csc-detail-row__val {
+        text-align: left;
+    }
+}

@@ -1,0 +1,1463 @@
+/*
+ * =========================================================
+ * ARSI AGRI-MANAGE (AAM)
+ * File     : public/assets/css/theme.css
+ * Purpose  : Light / Dark Mode theme layer.
+ *            ADDITIVE ONLY — does NOT override existing CSS.
+ *            Uses [data-theme="dark"] scoped selectors.
+ *            Light mode = default appearance (no changes).
+ *            Dark mode  = dark adaptation via CSS variables.
+ * =========================================================
+ *
+ * APPROACH:
+ *   <html data-theme="light|dark">
+ *   Theme variables are defined per [data-theme] block.
+ *   All dark mode rules are scoped to [data-theme="dark"].
+ *   Light mode rules preserve the existing visual exactly.
+ *
+ * LOAD ORDER: after app.css (so theme can supplement it).
+ * =========================================================
+ */
+
+/* ─────────────────────────────────────────────────────────
+ * 1. THEME TOGGLE BUTTON  (injected into topbar)
+ * ─────────────────────────────────────────────────────────*/
+
+#themeToggleBtn {
+    background:  none;
+    border:      none;
+    color:       rgba(255,255,255,.85);
+    padding:     .25rem .4rem;
+    border-radius: 6px;
+    cursor:      pointer;
+    display:     inline-flex;
+    align-items: center;
+    gap:         .3rem;
+    font-size:   .82rem;
+    transition:  background 0.18s ease-in-out, color 0.18s ease-in-out;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+#themeToggleBtn:hover {
+    background: rgba(255,255,255,.12);
+    color:      #fff;
+}
+
+#themeToggleBtn .theme-icon {
+    font-size: 1rem;
+    transition: transform 0.35s ease;
+}
+
+#themeToggleBtn:hover .theme-icon {
+    transform: rotate(20deg);
+}
+
+/* Hide label text on very small screens — keep icon only */
+@media (max-width: 399px) {
+    #themeToggleBtn .theme-label { display: none; }
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 2. GLOBAL TRANSITION  (smooth theme switch)
+ *    Only colour/background properties — NOT layout props.
+ *    Scoped to avoid side-effects on hover/focus animations.
+ * ─────────────────────────────────────────────────────────*/
+
+[data-theme="dark"],
+[data-theme="dark"] *:not(canvas):not(svg):not(img):not(video):not(.bi) {
+    transition:
+        background-color 0.22s ease,
+        border-color     0.22s ease,
+        color            0.22s ease,
+        box-shadow       0.22s ease !important;
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 3. CSS VARIABLES
+ *    [data-theme="light"] = existing design values (no change)
+ *    [data-theme="dark"]  = dark adaptation values
+ * ─────────────────────────────────────────────────────────*/
+
+[data-theme="light"] {
+    --theme-bg:           #f4f6fb;
+    --theme-surface:      #ffffff;
+    --theme-card:         #ffffff;
+    --theme-card-border:  #e8ecf0;
+    --theme-card-header:  transparent;
+    --theme-text:         #212529;
+    --theme-text-muted:   #6c757d;
+    --theme-text-subtle:  #adb5bd;
+    --theme-border:       #e8ecf0;
+    --theme-border-light: #f0f2f5;
+    --theme-input-bg:     #ffffff;
+    --theme-input-text:   #212529;
+    --theme-input-border: #ced4da;
+    --theme-input-placeholder: rgba(108,117,125,.65);
+    --theme-shadow-sm:    0 1px 4px rgba(0,0,0,.08);
+    --theme-shadow:       0 2px 12px rgba(0,0,0,.10);
+    --theme-primary:      #0d6efd;
+    --theme-hover-bg:     #f0f4ff;
+    --theme-sidebar:      #1a1d21;
+    --theme-navbar:       #0d6efd;
+    --theme-footer-bg:    #f8f9fa;
+    --theme-footer-border:#dee2e6;
+    --theme-table-head:   #f8f9fa;
+    --theme-table-stripe: #f8f9fa;
+    --theme-table-hover:  #f0f4ff;
+    --theme-modal-bg:     #ffffff;
+    --theme-modal-header: #f8f9fa;
+    --theme-dropdown-bg:  #ffffff;
+    --theme-dropdown-hover: #f0f4ff;
+    --theme-code-bg:      #f8f9fa;
+    --theme-skeleton-from:#f0f0f0;
+    --theme-skeleton-to:  #e0e0e0;
+    --theme-notif-unread: #f8f9fa;
+    --theme-search-bg:    rgba(255,255,255,.15);
+}
+
+[data-theme="dark"] {
+    --theme-bg:           #141618;
+    --theme-surface:      #1e2125;
+    --theme-card:         #252a2f;
+    --theme-card-border:  #373d44;
+    --theme-card-header:  #2a3038;
+    --theme-text:         #dee2e6;
+    --theme-text-muted:   #909aab;
+    --theme-text-subtle:  #6c757d;
+    --theme-border:       #373d44;
+    --theme-border-light: #2e343b;
+    --theme-input-bg:     #2a2f36;
+    --theme-input-text:   #dee2e6;
+    --theme-input-border: #4a5260;
+    --theme-input-placeholder: rgba(144,154,171,.6);
+    --theme-shadow-sm:    0 1px 4px rgba(0,0,0,.35);
+    --theme-shadow:       0 2px 12px rgba(0,0,0,.45);
+    --theme-primary:      #4d94ff;
+    --theme-hover-bg:     rgba(77,148,255,.09);
+    --theme-sidebar:      #111315;
+    --theme-navbar:       #1a1d21;
+    --theme-footer-bg:    #1a1d21;
+    --theme-footer-border:#373d44;
+    --theme-table-head:   #2a3038;
+    --theme-table-stripe: #1e2125;
+    --theme-table-hover:  rgba(77,148,255,.07);
+    --theme-modal-bg:     #252a2f;
+    --theme-modal-header: #2a3038;
+    --theme-dropdown-bg:  #252a2f;
+    --theme-dropdown-hover: rgba(255,255,255,.07);
+    --theme-code-bg:      #1a1d21;
+    --theme-skeleton-from:#2a2f36;
+    --theme-skeleton-to:  #343a42;
+    --theme-notif-unread: #2a3038;
+    --theme-search-bg:    rgba(255,255,255,.10);
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 4. LIGHT MODE  — no visual changes needed.
+ *    The existing app.css IS the light theme.
+ *    Only add variables without altering selectors.
+ * ─────────────────────────────────────────────────────────*/
+
+/* (intentionally empty — existing CSS handles light mode) */
+
+/* ─────────────────────────────────────────────────────────
+ * 5. DARK MODE OVERRIDES
+ *    Every rule is scoped to [data-theme="dark"].
+ *    Follows the existing CSS structure — no layout changes.
+ * ─────────────────────────────────────────────────────────*/
+
+/* ── 5.1  Page background & body text ──────────────────── */
+[data-theme="dark"] body {
+    background: var(--theme-bg);
+    color:      var(--theme-text);
+}
+
+/* ── 5.2  Topbar / Navbar ───────────────────────────────── */
+[data-theme="dark"] #topbar,
+[data-theme="dark"] #topbar.bg-primary {
+    background-color: var(--theme-navbar) !important;
+    border-bottom:    1px solid var(--theme-border);
+}
+
+/* Ensure topbar icons/text remain white in dark mode */
+[data-theme="dark"] #topbar .text-white,
+[data-theme="dark"] #topbar .btn-link.text-white,
+[data-theme="dark"] #topbar .navbar-brand {
+    color: #dee2e6 !important;
+}
+
+/* ── 5.3  Sidebar ───────────────────────────────────────── */
+[data-theme="dark"] #sidebar {
+    background: var(--theme-sidebar) !important;
+    border-right: 1px solid var(--theme-border);
+}
+
+[data-theme="dark"] #sidebar .border-bottom,
+[data-theme="dark"] #sidebar .border-top,
+[data-theme="dark"] #sidebar .border-secondary {
+    border-color: var(--theme-border) !important;
+}
+
+[data-theme="dark"] #sidebar .sidebar-section-label,
+[data-theme="dark"] #sidebar .sidebar-zone-biz {
+    color: rgba(144,154,171,.55);
+}
+
+[data-theme="dark"] #sidebar .text-secondary {
+    color: var(--theme-text-muted) !important;
+}
+
+[data-theme="dark"] #sidebar .text-white,
+[data-theme="dark"] #sidebar .fw-semibold.small.text-white {
+    color: var(--theme-text) !important;
+}
+
+/* ── 5.4  Cards ─────────────────────────────────────────── */
+[data-theme="dark"] .card {
+    background:   var(--theme-card);
+    border-color: var(--theme-card-border);
+    box-shadow:   var(--theme-shadow-sm);
+}
+
+[data-theme="dark"] .card-header {
+    background:   var(--theme-card-header);
+    border-color: var(--theme-card-border);
+    color:        var(--theme-text);
+}
+
+[data-theme="dark"] .card-body,
+[data-theme="dark"] .card-footer {
+    color: var(--theme-text);
+}
+
+/* Card footer / bg-light inside cards */
+[data-theme="dark"] .card .bg-light,
+[data-theme="dark"] .product-card-actions,
+[data-theme="dark"] .filter-panel,
+[data-theme="dark"] .filter-bar {
+    background: var(--theme-card-header) !important;
+    border-color: var(--theme-card-border) !important;
+}
+
+/* ── 5.5  KPI / Stat Cards ──────────────────────────────── */
+[data-theme="dark"] .kpi-card .kpi-label,
+[data-theme="dark"] .kpi-card .kpi-value ~ small,
+[data-theme="dark"] .stat-card .stat-label {
+    color: var(--theme-text-muted) !important;
+}
+
+[data-theme="dark"] .stat-card,
+[data-theme="dark"] .settings-kpi-card,
+[data-theme="dark"] .org-kpi-card {
+    background:   var(--theme-card);
+    border-color: var(--theme-card-border);
+}
+
+/* ── 5.6  Tables ─────────────────────────────────────────── */
+[data-theme="dark"] .table {
+    --bs-table-bg:         var(--theme-card);
+    --bs-table-striped-bg: var(--theme-table-stripe);
+    --bs-table-hover-bg:   var(--theme-table-hover);
+    --bs-table-border-color: var(--theme-card-border);
+    color: var(--theme-text);
+}
+
+[data-theme="dark"] .table th {
+    color:      var(--theme-text-muted);
+    background: var(--theme-table-head);
+    border-color: var(--theme-card-border);
+}
+
+[data-theme="dark"] .table td {
+    color:        var(--theme-text);
+    border-color: var(--theme-card-border);
+}
+
+[data-theme="dark"] .table-hover tbody tr:hover,
+[data-theme="dark"] .table-hover tbody tr:hover > * {
+    background-color: var(--theme-table-hover) !important;
+    color: var(--theme-text);
+}
+
+[data-theme="dark"] .table-light,
+[data-theme="dark"] .table thead.table-light th,
+[data-theme="dark"] thead.table-light,
+[data-theme="dark"] thead.table-light > tr > th {
+    --bs-table-bg: var(--theme-table-head);
+    background: var(--theme-table-head) !important;
+    color: var(--theme-text-muted) !important;
+    border-color: var(--theme-card-border) !important;
+}
+
+[data-theme="dark"] .audit-table tbody tr:hover,
+[data-theme="dark"] .settings-table tbody tr:hover,
+[data-theme="dark"] .org-table tbody tr:hover {
+    background: var(--theme-table-hover);
+}
+
+[data-theme="dark"] .settings-table th,
+[data-theme="dark"] .org-table th {
+    background: var(--theme-table-head);
+    color:      var(--theme-text-muted);
+    border-color: var(--theme-card-border);
+}
+
+/* ── 5.7  Forms — inputs, selects, textareas ─────────────── */
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select,
+[data-theme="dark"] textarea.form-control {
+    background:   var(--theme-input-bg);
+    color:        var(--theme-input-text);
+    border-color: var(--theme-input-border);
+}
+
+[data-theme="dark"] .form-control:focus,
+[data-theme="dark"] .form-select:focus {
+    background:   var(--theme-input-bg);
+    color:        var(--theme-input-text);
+    border-color: var(--theme-primary);
+    box-shadow:   0 0 0 3px rgba(77,148,255,.2);
+}
+
+[data-theme="dark"] .form-control::placeholder,
+[data-theme="dark"] textarea.form-control::placeholder {
+    color: var(--theme-input-placeholder);
+}
+
+[data-theme="dark"] .form-control:disabled,
+[data-theme="dark"] .form-select:disabled,
+[data-theme="dark"] .form-control[readonly] {
+    background: #232830;
+    color:      var(--theme-text-muted);
+}
+
+[data-theme="dark"] .form-label,
+[data-theme="dark"] .form-check-label {
+    color: var(--theme-text);
+}
+
+[data-theme="dark"] .form-text {
+    color: var(--theme-text-muted);
+}
+
+/* Input groups */
+[data-theme="dark"] .input-group-text {
+    background:   var(--theme-card-header);
+    color:        var(--theme-text-muted);
+    border-color: var(--theme-input-border);
+}
+
+/* Checkboxes / radios */
+[data-theme="dark"] .form-check-input {
+    background-color: var(--theme-input-bg);
+    border-color:     var(--theme-input-border);
+}
+[data-theme="dark"] .form-check-input:checked {
+    background-color: var(--theme-primary);
+    border-color:     var(--theme-primary);
+}
+
+/* Form section card header */
+[data-theme="dark"] .settings-card-header,
+[data-theme="dark"] .form-section-title {
+    background:   var(--theme-card-header);
+    border-color: var(--theme-card-border);
+    color:        var(--theme-text-muted);
+}
+
+/* ── 5.8  Buttons ────────────────────────────────────────── */
+/* Primary/secondary/danger/warning/info/success btns: keep existing Bootstrap colours */
+/* Only outline buttons need dark adaptation */
+
+[data-theme="dark"] .btn-outline-secondary {
+    color:        var(--theme-text-muted);
+    border-color: var(--theme-border);
+}
+[data-theme="dark"] .btn-outline-secondary:hover {
+    background: var(--theme-hover-bg);
+    color:      var(--theme-text);
+    border-color: var(--theme-primary);
+}
+
+[data-theme="dark"] .btn-outline-light {
+    color:        var(--theme-text);
+    border-color: var(--theme-border);
+}
+[data-theme="dark"] .btn-outline-light:hover {
+    background: var(--theme-hover-bg);
+    color:      var(--theme-text);
+}
+
+[data-theme="dark"] .btn-light {
+    background:   var(--theme-card-header);
+    border-color: var(--theme-border);
+    color:        var(--theme-text);
+}
+[data-theme="dark"] .btn-light:hover {
+    background: var(--theme-hover-bg);
+    color:      var(--theme-text);
+}
+
+[data-theme="dark"] .btn-link {
+    color: var(--theme-primary);
+}
+
+/* ── 5.9  Modals ─────────────────────────────────────────── */
+[data-theme="dark"] .modal-content {
+    background:   var(--theme-modal-bg);
+    border-color: var(--theme-card-border);
+    color:        var(--theme-text);
+}
+
+[data-theme="dark"] .modal-header {
+    background:   var(--theme-modal-header);
+    border-color: var(--theme-card-border);
+    color:        var(--theme-text);
+}
+
+[data-theme="dark"] .modal-footer {
+    background:   var(--theme-modal-header);
+    border-color: var(--theme-card-border);
+}
+
+[data-theme="dark"] .modal-body {
+    color: var(--theme-text);
+}
+
+[data-theme="dark"] .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* ── 5.10  Dropdowns ─────────────────────────────────────── */
+[data-theme="dark"] .dropdown-menu {
+    background:   var(--theme-dropdown-bg);
+    border-color: var(--theme-card-border);
+    box-shadow:   var(--theme-shadow);
+}
+
+[data-theme="dark"] .dropdown-item {
+    color: var(--theme-text);
+}
+
+[data-theme="dark"] .dropdown-item:hover,
+[data-theme="dark"] .dropdown-item:focus {
+    background: var(--theme-dropdown-hover);
+    color:      var(--theme-text);
+}
+
+[data-theme="dark"] .dropdown-item.text-danger {
+    color: #f07080 !important;
+}
+
+[data-theme="dark"] .dropdown-item-text {
+    color: var(--theme-text);
+}
+
+[data-theme="dark"] .dropdown-divider {
+    border-color: var(--theme-border);
+}
+
+[data-theme="dark"] .dropdown-header {
+    color: var(--theme-text-muted);
+}
+
+/* Notification dropdown bg-light header/footer */
+[data-theme="dark"] .dropdown-menu .bg-light {
+    background: var(--theme-card-header) !important;
+    border-color: var(--theme-card-border) !important;
+}
+
+[data-theme="dark"] .dropdown-menu .text-muted {
+    color: var(--theme-text-muted) !important;
+}
+
+[data-theme="dark"] .dropdown-menu .small.text-primary {
+    color: var(--theme-primary) !important;
+}
+
+/* ── 5.11  Alerts ────────────────────────────────────────── */
+[data-theme="dark"] .alert-success {
+    background: rgba(25,135,84,.18);
+    color:      #6ecc9a;
+    border:     1px solid rgba(25,135,84,.3);
+}
+[data-theme="dark"] .alert-danger {
+    background: rgba(220,53,69,.18);
+    color:      #f07080;
+    border:     1px solid rgba(220,53,69,.3);
+}
+[data-theme="dark"] .alert-warning {
+    background: rgba(255,193,7,.15);
+    color:      #f0c040;
+    border:     1px solid rgba(255,193,7,.25);
+}
+[data-theme="dark"] .alert-info {
+    background: rgba(13,202,240,.15);
+    color:      #6bcde6;
+    border:     1px solid rgba(13,202,240,.25);
+}
+
+/* ── 5.12  Badges ────────────────────────────────────────── */
+/* Semantic status badges keep colour meaning — only lighten backgrounds */
+[data-theme="dark"] .status-badge.active,
+[data-theme="dark"] .status-pill.active {
+    background: rgba(25,135,84,.2);
+    color:      #6ecc9a;
+}
+[data-theme="dark"] .status-badge.inactive,
+[data-theme="dark"] .status-pill.inactive {
+    background: rgba(108,117,125,.2);
+    color:      var(--theme-text-muted);
+}
+[data-theme="dark"] .status-pending     { background: rgba(133,100,4,.25);  color: #f0c040; }
+[data-theme="dark"] .status-active      { background: rgba(25,135,84,.2);   color: #6ecc9a; }
+[data-theme="dark"] .status-completed   { background: rgba(25,135,84,.2);   color: #6ecc9a; }
+[data-theme="dark"] .status-received    { background: rgba(25,135,84,.2);   color: #6ecc9a; }
+[data-theme="dark"] .status-cancelled   { background: rgba(220,53,69,.2);   color: #f07080; }
+[data-theme="dark"] .status-voided      { background: rgba(220,53,69,.2);   color: #f07080; }
+[data-theme="dark"] .status-in_transit  { background: rgba(13,110,253,.2);  color: #7ab8ff; }
+[data-theme="dark"] .status-draft       { background: rgba(108,117,125,.2); color: #adb5bd; }
+
+/* Subtle bg utilities */
+[data-theme="dark"] .bg-success-subtle { background-color: rgba(25,135,84,.2)  !important; }
+[data-theme="dark"] .bg-primary-subtle { background-color: rgba(77,148,255,.15) !important; }
+[data-theme="dark"] .bg-danger-subtle  { background-color: rgba(220,53,69,.2)   !important; }
+[data-theme="dark"] .bg-warning-subtle { background-color: rgba(255,193,7,.15)  !important; }
+[data-theme="dark"] .bg-info-subtle    { background-color: rgba(13,202,240,.15) !important; }
+[data-theme="dark"] .bg-light          { background-color: var(--theme-card-header) !important; }
+[data-theme="dark"] .bg-white          { background-color: var(--theme-card)    !important; }
+
+/* Text colour utilities */
+[data-theme="dark"] .text-muted        { color: var(--theme-text-muted) !important; }
+[data-theme="dark"] .text-dark         { color: var(--theme-text) !important; }
+[data-theme="dark"] .text-body         { color: var(--theme-text) !important; }
+[data-theme="dark"] .text-secondary    { color: var(--theme-text-muted) !important; }
+
+/* ── 5.13  Pagination ────────────────────────────────────── */
+[data-theme="dark"] .page-item .page-link {
+    background:   var(--theme-card);
+    border-color: var(--theme-border);
+    color:        var(--theme-text);
+}
+[data-theme="dark"] .page-item .page-link:hover {
+    background: var(--theme-hover-bg);
+    color:      var(--theme-primary);
+    border-color: var(--theme-primary);
+}
+[data-theme="dark"] .page-item.active .page-link {
+    background:   var(--theme-primary);
+    border-color: var(--theme-primary);
+    color:        #fff;
+}
+[data-theme="dark"] .page-item.disabled .page-link {
+    background:   var(--theme-card);
+    border-color: var(--theme-border);
+    color:        var(--theme-text-subtle);
+}
+
+/* ── 5.14  Tabs ──────────────────────────────────────────── */
+[data-theme="dark"] .nav-tabs {
+    border-color: var(--theme-border);
+}
+[data-theme="dark"] .nav-tabs .nav-link {
+    color:      var(--theme-text-muted);
+    border-color: transparent;
+}
+[data-theme="dark"] .nav-tabs .nav-link:hover {
+    color:        var(--theme-text);
+    border-color: var(--theme-border) var(--theme-border) transparent;
+    background:   var(--theme-hover-bg);
+}
+[data-theme="dark"] .nav-tabs .nav-link.active {
+    background:   var(--theme-card);
+    border-color: var(--theme-border) var(--theme-border) var(--theme-card);
+    color:        var(--theme-text);
+}
+
+/* Nav pills (settings / org) */
+[data-theme="dark"] .settings-tab-pills .nav-link,
+[data-theme="dark"] .org-tab-pills .nav-link {
+    color: var(--theme-text-muted);
+}
+[data-theme="dark"] .settings-tab-pills .nav-link:hover,
+[data-theme="dark"] .org-tab-pills .nav-link:hover {
+    background: var(--theme-hover-bg);
+    color:      var(--theme-primary);
+}
+[data-theme="dark"] .settings-tab-pills .nav-link.active,
+[data-theme="dark"] .org-tab-pills .nav-link.active {
+    background: var(--theme-primary);
+    color:      #fff;
+}
+
+/* ── 5.15  Breadcrumbs ───────────────────────────────────── */
+[data-theme="dark"] .breadcrumb {
+    background: transparent;
+}
+[data-theme="dark"] .breadcrumb-item a {
+    color: var(--theme-primary);
+}
+[data-theme="dark"] .breadcrumb-item.active,
+[data-theme="dark"] .breadcrumb-item + .breadcrumb-item::before {
+    color: var(--theme-text-muted);
+}
+
+/* ── 5.16  Footer ────────────────────────────────────────── */
+[data-theme="dark"] .footer {
+    background:   var(--theme-footer-bg) !important;
+    border-color: var(--theme-footer-border) !important;
+    color:        var(--theme-text-muted);
+}
+
+/* ── 5.17  Search bar (in topbar) ────────────────────────── */
+[data-theme="dark"] #globalSearch,
+[data-theme="dark"] #mobileSearchInput {
+    background: var(--theme-search-bg);
+    color:      #fff;
+    border-color: transparent;
+}
+[data-theme="dark"] #globalSearch:focus,
+[data-theme="dark"] #mobileSearchInput:focus {
+    background:   rgba(255,255,255,.2) !important;
+    box-shadow:   none;
+    border-color: transparent;
+    color:        #fff;
+}
+[data-theme="dark"] #globalSearch::placeholder,
+[data-theme="dark"] #mobileSearchInput::placeholder {
+    color: rgba(255,255,255,.5);
+}
+
+/* Search results dropdown */
+[data-theme="dark"] #searchResults,
+[data-theme="dark"] #mobileSearchResults {
+    background:   var(--theme-dropdown-bg);
+    border-color: var(--theme-card-border);
+}
+[data-theme="dark"] #searchResults .dropdown-item,
+[data-theme="dark"] #mobileSearchResults .dropdown-item {
+    color: var(--theme-text);
+}
+[data-theme="dark"] #searchResults .dropdown-item:hover,
+[data-theme="dark"] #mobileSearchResults .dropdown-item:hover {
+    background: var(--theme-dropdown-hover);
+}
+[data-theme="dark"] #searchResults .aam-search-group-label,
+[data-theme="dark"] #mobileSearchResults .aam-search-group-label {
+    color: var(--theme-text-subtle);
+}
+[data-theme="dark"] #searchResults .aam-sr-footer,
+[data-theme="dark"] #mobileSearchResults .aam-sr-footer {
+    border-color: var(--theme-border);
+    color:        var(--theme-text-muted);
+}
+[data-theme="dark"] #searchResults .aam-sr-empty,
+[data-theme="dark"] #searchResults .aam-sr-error,
+[data-theme="dark"] #mobileSearchResults .aam-sr-empty,
+[data-theme="dark"] #mobileSearchResults .aam-sr-error {
+    color: var(--theme-text-muted);
+}
+
+/* ── 5.18  Notifications dropdown ────────────────────────── */
+[data-theme="dark"] #notificationList .dropdown-item.fw-semibold {
+    background: var(--theme-notif-unread);
+}
+[data-theme="dark"] #notificationList .dropdown-item {
+    color: var(--theme-text);
+    border-color: var(--theme-border);
+}
+[data-theme="dark"] .dropdown-menu .border-bottom {
+    border-color: var(--theme-border) !important;
+}
+
+/* ── 5.19  Loading skeleton ──────────────────────────────── */
+[data-theme="dark"] .skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--theme-skeleton-from) 25%,
+        var(--theme-skeleton-to)   50%,
+        var(--theme-skeleton-from) 75%
+    );
+    background-size: 200% 100%;
+}
+
+/* ── 5.20  Toasts ────────────────────────────────────────── */
+[data-theme="dark"] #aamToastContainer .toast {
+    border-color: var(--theme-border);
+}
+/* Coloured text-bg-* toasts keep their own background — OK */
+
+/* ── 5.21  Settings module ───────────────────────────────── */
+[data-theme="dark"] .settings-nav-tile {
+    background:   var(--theme-card);
+    border-color: var(--theme-card-border);
+}
+[data-theme="dark"] .settings-nav-tile:hover {
+    border-color: var(--theme-primary);
+    box-shadow:   var(--theme-shadow);
+}
+[data-theme="dark"] .settings-nav-tile .tile-title {
+    color: var(--theme-text);
+}
+[data-theme="dark"] .settings-card,
+[data-theme="dark"] .settings-kpi-card {
+    background:   var(--theme-card);
+    border-color: var(--theme-card-border);
+}
+[data-theme="dark"] .settings-card-header {
+    background:   var(--theme-card-header);
+    border-color: var(--theme-card-border);
+    color:        var(--theme-text-muted);
+}
+[data-theme="dark"] .settings-table th {
+    background:   var(--theme-table-head);
+    color:        var(--theme-text-muted);
+    border-color: var(--theme-border);
+}
+[data-theme="dark"] .filter-bar {
+    background:   var(--theme-card);
+    border-color: var(--theme-card-border);
+}
+[data-theme="dark"] .backup-item {
+    background:   var(--theme-card);
+    border-color: var(--theme-card-border);
+}
+[data-theme="dark"] .backup-item:hover {
+    border-color: var(--theme-primary);
+}
+[data-theme="dark"] .backup-file-icon {
+    background: rgba(77,148,255,.15);
+    color:      var(--theme-primary);
+}
+[data-theme="dark"] .logo-preview-wrap {
+    background:   var(--theme-card-header);
+    border-color: var(--theme-border);
+}
+[data-theme="dark"] .health-ring { border-color: var(--theme-border); }
+[data-theme="dark"] .health-ring.ok    { border-color: #198754; color: #6ecc9a; }
+[data-theme="dark"] .health-ring.warn  { border-color: #ffc107; color: #f0c040; }
+[data-theme="dark"] .health-ring.error { border-color: #dc3545; color: #f07080; }
+[data-theme="dark"] .settings-loading-overlay {
+    background: rgba(20,22,24,.75);
+}
+
+/* ── 5.22  Organization module ───────────────────────────── */
+[data-theme="dark"] .detail-card {
+    background:   var(--theme-card);
+    border-color: var(--theme-card-border);
+}
+[data-theme="dark"] .detail-meta-item {
+    border-color: var(--theme-border-light);
+}
+[data-theme="dark"] .detail-meta-label { color: var(--theme-text-muted); }
+[data-theme="dark"] .detail-meta-value { color: var(--theme-text); }
+[data-theme="dark"] .hierarchy-card {
+    background:   var(--theme-card);
+    border-color: var(--theme-card-border);
+}
+[data-theme="dark"] .hierarchy-card:hover {
+    border-color: var(--theme-primary);
+    box-shadow:   var(--theme-shadow);
+}
+[data-theme="dark"] .hierarchy-card.level-org {
+    background:   rgba(77,148,255,.1);
+    border-color: var(--theme-primary);
+}
+[data-theme="dark"] .hierarchy-node::before,
+[data-theme="dark"] .hierarchy-node-inner::before,
+[data-theme="dark"] .hierarchy-connector {
+    background: var(--theme-border);
+}
+[data-theme="dark"] .org-table .entity-code {
+    background:   var(--theme-card-header);
+    color:        var(--theme-text-muted);
+}
+[data-theme="dark"] .org-table .entity-name { color: var(--theme-text); }
+[data-theme="dark"] .gps-badge {
+    background:   var(--theme-card-header);
+    color:        var(--theme-text-muted);
+}
+[data-theme="dark"] .loading-overlay {
+    background: rgba(20,22,24,.75);
+}
+
+/* ── 5.23  Products module ───────────────────────────────── */
+[data-theme="dark"] .product-card {
+    background:   var(--theme-card);
+    border-color: var(--theme-card-border);
+}
+[data-theme="dark"] .product-card .product-name { color: var(--theme-text); }
+[data-theme="dark"] .product-card .product-code {
+    background:   var(--theme-card-header);
+    border-color: var(--theme-card-border);
+    color:        var(--theme-text-muted);
+}
+[data-theme="dark"] .product-card .product-card-img-placeholder {
+    background: linear-gradient(135deg, var(--theme-card-header), var(--theme-card));
+    color:      var(--theme-text-subtle);
+}
+[data-theme="dark"] .stat-card {
+    background:   var(--theme-card);
+    border-color: var(--theme-card-border);
+}
+[data-theme="dark"] .stat-card .stat-value { color: var(--theme-text); }
+[data-theme="dark"] .upload-drop-zone {
+    background:   var(--theme-card-header);
+    border-color: var(--theme-border);
+    color:        var(--theme-text-muted);
+}
+[data-theme="dark"] .upload-drop-zone:hover,
+[data-theme="dark"] .upload-drop-zone.drag-over {
+    border-color: var(--theme-primary);
+    background:   rgba(77,148,255,.08);
+}
+[data-theme="dark"] .barcode-card {
+    background:   var(--theme-card);
+    border-color: var(--theme-card-border);
+}
+[data-theme="dark"] .barcode-card .barcode-product-name { color: var(--theme-text); }
+[data-theme="dark"] .barcode-card .barcode-number       { color: var(--theme-text); }
+[data-theme="dark"] .product-loading-overlay {
+    background: rgba(20,22,24,.7);
+}
+[data-theme="dark"] .category-icon-badge {
+    background: rgba(77,148,255,.12);
+    color:      var(--theme-primary);
+}
+
+/* ── 5.24  POS Terminal ──────────────────────────────────── */
+[data-theme="dark"] .pos-wrap,
+[data-theme="dark"] .pos-products,
+[data-theme="dark"] .pos-cart {
+    background: var(--theme-card);
+}
+
+/* ── 5.25  Workflow step cards & borders ─────────────────── */
+[data-theme="dark"] .workflow-step {
+    border-left-color: transparent;
+}
+[data-theme="dark"] .workflow-step:hover {
+    border-left-color: var(--theme-primary);
+}
+
+/* ── 5.26  Hover utilities ───────────────────────────────── */
+[data-theme="dark"] .hover-bg-light:hover {
+    background: var(--theme-hover-bg);
+}
+
+/* ── 5.27  Lists and general text ────────────────────────── */
+[data-theme="dark"] .list-group-item {
+    background:   var(--theme-card);
+    border-color: var(--theme-border);
+    color:        var(--theme-text);
+}
+[data-theme="dark"] .list-group-item:hover {
+    background: var(--theme-hover-bg);
+}
+
+[data-theme="dark"] .border,
+[data-theme="dark"] .border-top,
+[data-theme="dark"] .border-bottom,
+[data-theme="dark"] .border-start,
+[data-theme="dark"] .border-end {
+    border-color: var(--theme-border) !important;
+}
+
+[data-theme="dark"] hr {
+    border-color: var(--theme-border);
+    opacity: 1;
+}
+
+/* ── 5.28  Code / Pre ────────────────────────────────────── */
+[data-theme="dark"] code,
+[data-theme="dark"] pre,
+[data-theme="dark"] .font-monospace {
+    background: var(--theme-code-bg);
+    color:      #adbac7;
+    border-color: var(--theme-border);
+}
+
+/* ── 5.29  Empty state ───────────────────────────────────── */
+[data-theme="dark"] .empty-state {
+    color: var(--theme-text-muted);
+}
+[data-theme="dark"] .empty-state h6 {
+    color: var(--theme-text-muted);
+}
+
+/* ── 5.30  Sidebar mobile backdrop ──────────────────────── */
+[data-theme="dark"] #sidebarBackdrop {
+    background: rgba(0,0,0,.65);
+}
+
+/* ── 5.31  Mobile search overlay ────────────────────────── */
+[data-theme="dark"] #mobileSearchOverlay {
+    background: var(--theme-navbar);
+}
+
+/* ── 5.32  Company header banner (settings) ─────────────── */
+/* Gradient banners keep their own colour — readable in dark mode already */
+
+/* ─────────────────────────────────────────────────────────
+ * 6. DARK MODE: CHART.JS COLOR ADJUSTMENTS
+ *    Applied via JS (see theme.js) — these CSS vars are read
+ *    by the JS to pass the correct colours to Chart.js.
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] {
+    --chart-text:    #909aab;
+    --chart-grid:    rgba(255,255,255,.06);
+    --chart-tooltip-bg: #2a3038;
+    --chart-tooltip-border: #373d44;
+    --chart-tooltip-text: #dee2e6;
+}
+[data-theme="light"] {
+    --chart-text:    #6c757d;
+    --chart-grid:    rgba(0,0,0,.05);
+    --chart-tooltip-bg: #fff;
+    --chart-tooltip-border: #e8ecf0;
+    --chart-tooltip-text: #212529;
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 7. NO FLASH OF WRONG THEME
+ *    When the script injected into <head> runs, it adds
+ *    data-theme to <html> before body paints.
+ *    This ensures the html element already has the right
+ *    variables set before the body renders.
+ * ─────────────────────────────────────────────────────────*/
+html[data-theme] {
+    /* nothing needed — variables resolve as soon as the
+       attribute is set, which the inline script does first */
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 8. PRINT  — always light, never dark
+ * ─────────────────────────────────────────────────────────*/
+@media print {
+    [data-theme="dark"] body,
+    [data-theme="dark"] .card,
+    [data-theme="dark"] .table {
+        background: #fff !important;
+        color:      #000 !important;
+    }
+    [data-theme="dark"] .table th,
+    [data-theme="dark"] .table td {
+        background: #fff !important;
+        color:      #000 !important;
+        border-color: #ccc !important;
+    }
+    /* Toggle button never appears in print */
+    #themeToggleBtn { display: none !important; }
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 9. THEME TINT UTILITY CLASSES
+ *    Used by PHP views that previously had hard-coded
+ *    light background inline styles.
+ *    Light mode: keep original tinted look.
+ *    Dark mode:  use a subtle transparent tint instead.
+ * ─────────────────────────────────────────────────────────*/
+
+/* Replaces background:#f8f9fa inline style */
+.theme-surface-subtle {
+    background: #f8f9fa;
+}
+[data-theme="dark"] .theme-surface-subtle {
+    background: var(--theme-card-header);
+}
+
+/* Replaces background:#f0f4ff / #f8f9ff (blue tint) */
+.theme-tint-primary {
+    background: #f0f4ff;
+}
+[data-theme="dark"] .theme-tint-primary {
+    background: rgba(77,148,255,.08);
+}
+
+/* Replaces background:#f8fff8 (green tint) */
+.theme-tint-success {
+    background: #f8fff8;
+}
+[data-theme="dark"] .theme-tint-success {
+    background: rgba(25,135,84,.08);
+}
+
+/* Replaces background:#fff9f0 / #fffaf5 (orange tint) */
+.theme-tint-orange {
+    background: #fff9f0;
+}
+[data-theme="dark"] .theme-tint-orange {
+    background: rgba(253,126,20,.08);
+}
+
+/* Replaces background:#eff5ff (light blue) */
+.theme-tint-blue-soft {
+    background: #eff5ff;
+}
+[data-theme="dark"] .theme-tint-blue-soft {
+    background: rgba(77,148,255,.1);
+}
+
+/* POS no-price card: warm tint handled via class */
+[data-theme="dark"] .pos-no-price {
+    background: rgba(255,193,7,.05) !important;
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 10. BREADCRUMB wrapper background
+ *     The bg-light border-bottom wrapper needs to adapt.
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] .breadcrumb-wrapper,
+[data-theme="dark"] .container-fluid.bg-light.border-bottom {
+    background: var(--theme-surface) !important;
+    border-color: var(--theme-border) !important;
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 11. NOTIFICATION dropdown unread item bg-light fix
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] .dropdown-item.fw-semibold.bg-light {
+    background: var(--theme-notif-unread) !important;
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 12. TOPBAR search form-control adjustments
+ *     Bootstrap adds bg-white bg-opacity-10 via inline style;
+ *     override only in dark mode.
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] #topbar .form-control {
+    background: rgba(255,255,255,.12) !important;
+    color: #fff !important;
+    border-color: transparent !important;
+}
+[data-theme="dark"] #topbar .form-control:focus {
+    background: rgba(255,255,255,.2) !important;
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 13. BADGE shop/farm type backgrounds
+ *     These are semantic colours — in dark mode use
+ *     transparent versions for readability.
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] .badge[style*="background:#fde8d0"] {
+    background: rgba(253,126,20,.2) !important;
+    color: #f0a060 !important;
+}
+[data-theme="dark"] .badge[style*="background:#d1fae5"] {
+    background: rgba(25,135,84,.2) !important;
+    color: #6ecc9a !important;
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 14. CATEGORIES icon badge (admin/categories/show.php)
+ *     The bg-primary-subtle utility already handles dark mode
+ *     via rule 5.12 above. No extra rule needed.
+ * ─────────────────────────────────────────────────────────*/
+
+/* ─────────────────────────────────────────────────────────
+ * 15. MINIMAL LAYOUT (login page) dark mode
+ *     minimal.php uses a blue gradient body — intentionally
+ *     kept as-is in dark mode (it's the brand login screen).
+ *     Only the card itself adapts.
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] .minimal-card {
+    background: #1e2125;
+    box-shadow: 0 8px 40px rgba(0,0,0,.55);
+}
+[data-theme="dark"] .minimal-body {
+    color: var(--theme-text);
+}
+[data-theme="dark"] .minimal-footer {
+    background: #252a2f;
+    border-color: var(--theme-border);
+    color: var(--theme-text-muted);
+}
+/* Minimal layout form inputs */
+[data-theme="dark"] .minimal-body .form-control,
+[data-theme="dark"] .minimal-body .form-select {
+    background:   var(--theme-input-bg);
+    color:        var(--theme-input-text);
+    border-color: var(--theme-input-border);
+}
+[data-theme="dark"] .minimal-body .form-label {
+    color: var(--theme-text);
+}
+[data-theme="dark"] .minimal-body .form-control::placeholder {
+    color: var(--theme-input-placeholder);
+}
+[data-theme="dark"] .minimal-body .alert-danger {
+    background: rgba(220,53,69,.18);
+    color: #f07080;
+    border: 1px solid rgba(220,53,69,.3);
+}
+[data-theme="dark"] .minimal-body .alert-success {
+    background: rgba(25,135,84,.18);
+    color: #6ecc9a;
+    border: 1px solid rgba(25,135,84,.3);
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 16. DROPDOWN HEADER / FOOTER ROWS
+ *     Used in topbar notification dropdown header/footer.
+ *     Replaces bg-light for reliable dark mode adaptation.
+ * ─────────────────────────────────────────────────────────*/
+.theme-dropdown-header {
+    background: #f8f9fa;
+}
+[data-theme="dark"] .theme-dropdown-header {
+    background: var(--theme-card-header);
+    border-color: var(--theme-border) !important;
+}
+[data-theme="dark"] .theme-dropdown-header .fw-semibold,
+[data-theme="dark"] .theme-dropdown-header small,
+[data-theme="dark"] .theme-dropdown-header span {
+    color: var(--theme-text);
+}
+[data-theme="dark"] .theme-dropdown-header .btn-link,
+[data-theme="dark"] .theme-dropdown-header .text-muted {
+    color: var(--theme-text-muted) !important;
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 17. GRADIENT BANNER CARDS
+ *     Dashboard and module header banners use inline
+ *     background: linear-gradient(...) styles.
+ *     The global [data-theme="dark"] .card rule must NOT
+ *     override inline styles — inline styles have higher
+ *     specificity so they are safe.
+ *     BUT .card-header inside gradient cards would still
+ *     pick up the dark card-header rule.
+ *     Scope the card-header rule to only apply when the
+ *     card does NOT have an inline background gradient.
+ *
+ *     Cards with inline style gradients render fine in dark
+ *     mode since their gradients already use dark or vivid
+ *     colours (navy, forest green, teal, etc.).
+ *
+ *     The only exception was the light gradient in farm
+ *     dispatches/view.php — replaced with .theme-tint-success.
+ * ─────────────────────────────────────────────────────────*/
+
+/*
+ * Ensure gradient banner cards keep their text white in dark mode.
+ * These banners already have color:#fff set via PHP/HTML so text
+ * stays white without any extra rule.
+ * This comment documents that this is intentional — no rule needed.
+ */
+
+/* ─────────────────────────────────────────────────────────
+ * 18. LIST-GROUP items inside cards
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] .list-group-item-action {
+    background:   var(--theme-card);
+    border-color: var(--theme-border);
+    color:        var(--theme-text);
+}
+[data-theme="dark"] .list-group-item-action:hover,
+[data-theme="dark"] .list-group-item-action:focus {
+    background: var(--theme-hover-bg);
+    color:      var(--theme-text);
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 19. PROGRESS BARS — track background in dark mode
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] .progress {
+    background: var(--theme-border);
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 20. HR / DIVIDERS
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] .dropdown-divider,
+[data-theme="dark"] .vr {
+    border-color: var(--theme-border);
+    opacity: 1;
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 21. TABLE inside modal (POS confirm modal)
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] .modal-body .table {
+    --bs-table-bg: transparent;
+    color: var(--theme-text);
+}
+[data-theme="dark"] .modal-body .table td,
+[data-theme="dark"] .modal-body .table th {
+    border-color: var(--theme-border);
+    color:        var(--theme-text);
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 22. SPINNER / LOADING text
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] .text-center.text-muted {
+    color: var(--theme-text-muted) !important;
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 23. NAV-PILLS (Bootstrap utility nav-pills)
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] .nav-pills .nav-link {
+    color: var(--theme-text-muted);
+}
+[data-theme="dark"] .nav-pills .nav-link:hover {
+    background: var(--theme-hover-bg);
+    color:      var(--theme-text);
+}
+[data-theme="dark"] .nav-pills .nav-link.active {
+    background: var(--theme-primary);
+    color:      #fff;
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 24. TOAST container (AAM.toast() calls)
+ *     Coloured text-bg-* toasts keep their Bootstrap palette.
+ *     Only the white default toast needs a dark variant.
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] .toast:not([class*="text-bg-"]) {
+    background:   var(--theme-card);
+    border-color: var(--theme-border);
+    color:        var(--theme-text);
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 25. ACCORDION (if used anywhere)
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] .accordion-item {
+    background:   var(--theme-card);
+    border-color: var(--theme-border);
+}
+[data-theme="dark"] .accordion-button {
+    background:   var(--theme-card-header);
+    color:        var(--theme-text);
+    box-shadow:   none;
+}
+[data-theme="dark"] .accordion-button:not(.collapsed) {
+    background:   var(--theme-hover-bg);
+    color:        var(--theme-primary);
+}
+[data-theme="dark"] .accordion-button::after {
+    filter: invert(1) brightness(1.5);
+}
+[data-theme="dark"] .accordion-body {
+    background: var(--theme-card);
+    color:      var(--theme-text);
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 26. INLINE RGBA TRANSPARENT TINTS
+ *     Backgrounds like rgba(253,126,20,.12) are semi-
+ *     transparent and work fine in both themes because
+ *     they layer on top of the parent surface.
+ *     No extra rules needed.
+ * ─────────────────────────────────────────────────────────*/
+
+/* ─────────────────────────────────────────────────────────
+ * 27. PRINT TEMPLATE
+ *     print.php always uses white — correct.
+ *     No theme changes needed for print layout.
+ * ─────────────────────────────────────────────────────────*/
+
+/* ─────────────────────────────────────────────────────────
+ * 28. CLOSE BUTTON in alerts
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] .alert .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 29. SIDEBAR scrollbar in dark mode
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] #sidebar {
+    scrollbar-color: #2e343b transparent;
+}
+[data-theme="dark"] #sidebar::-webkit-scrollbar-thumb {
+    background: #2e343b;
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 30. TABLE striped variant
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] .table-striped > tbody > tr:nth-of-type(odd) > * {
+    --bs-table-accent-bg: var(--theme-table-stripe);
+    color: var(--theme-text);
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 31. FORM FLOATING labels
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] .form-floating > label {
+    color: var(--theme-text-muted);
+}
+[data-theme="dark"] .form-floating > .form-control:focus ~ label,
+[data-theme="dark"] .form-floating > .form-control:not(:placeholder-shown) ~ label {
+    color: var(--theme-primary);
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 32. INVALID / VALID feedback colours
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] .valid-feedback   { color: #6ecc9a; }
+[data-theme="dark"] .invalid-feedback { color: #f07080; }
+[data-theme="dark"] .form-control.is-valid,
+[data-theme="dark"] .form-select.is-valid {
+    border-color: #198754;
+    background-color: var(--theme-input-bg);
+}
+[data-theme="dark"] .form-control.is-invalid,
+[data-theme="dark"] .form-select.is-invalid {
+    border-color: #dc3545;
+    background-color: var(--theme-input-bg);
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 33. ORGANIZATION TYPE BADGES (from organization.css)
+ *     All light backgrounds → semi-transparent dark tints.
+ * ─────────────────────────────────────────────────────────*/
+
+/* Farm types */
+[data-theme="dark"] .type-crop        { background: rgba(25,135,84,.2);   color: #6ecc9a; }
+[data-theme="dark"] .type-livestock   { background: rgba(13,202,240,.15); color: #6bcde6; }
+[data-theme="dark"] .type-mixed       { background: rgba(108,117,125,.2); color: #adb5bd; }
+[data-theme="dark"] .type-dairy       { background: rgba(13,110,253,.18); color: #7ab8ff; }
+[data-theme="dark"] .type-poultry     { background: rgba(255,193,7,.15);  color: #f0c040; }
+[data-theme="dark"] .type-horticulture{ background: rgba(25,135,84,.18);  color: #6ecc9a; }
+
+/* Warehouse types */
+[data-theme="dark"] .type-central       { background: rgba(13,110,253,.18);  color: #7ab8ff; }
+[data-theme="dark"] .type-cold_storage  { background: rgba(13,202,240,.15);  color: #6bcde6; }
+[data-theme="dark"] .type-dry_storage   { background: rgba(255,193,7,.15);   color: #f0c040; }
+[data-theme="dark"] .type-bonded        { background: rgba(220,53,69,.18);   color: #f07080; }
+[data-theme="dark"] .type-distribution  { background: rgba(25,135,84,.18);   color: #6ecc9a; }
+
+/* Shop types */
+[data-theme="dark"] .type-retail    { background: rgba(253,126,20,.18); color: #f0a060; }
+[data-theme="dark"] .type-cafeteria { background: rgba(25,135,84,.18);  color: #6ecc9a; }
+[data-theme="dark"] .type-kiosk     { background: rgba(111,66,193,.18); color: #c090e0; }
+[data-theme="dark"] .type-outlet    { background: rgba(13,110,253,.18); color: #7ab8ff; }
+[data-theme="dark"] .type-mobile    { background: rgba(255,193,7,.15);  color: #f0c040; }
+
+/* ─────────────────────────────────────────────────────────
+ * 34. STATUS BADGES from organization.css
+ *     .status-badge.active / .inactive already handled
+ *     in rule 5.12. Aliases for status-pill are here.
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] .status-running    { background: rgba(13,202,240,.15); color: #6bcde6; }
+[data-theme="dark"] .status-failed     { background: rgba(220,53,69,.18);  color: #f07080; }
+[data-theme="dark"] .status-verified   { background: rgba(13,110,253,.18); color: #7ab8ff; }
+[data-theme="dark"] .status-deleted    { background: rgba(108,117,125,.2); color: #adb5bd; }
+
+/* Log level badges (settings.css) */
+[data-theme="dark"] .log-level-debug   { background: rgba(108,117,125,.2); color: #adb5bd; }
+[data-theme="dark"] .log-level-info    { background: rgba(13,202,240,.15); color: #6bcde6; }
+[data-theme="dark"] .log-level-notice  { background: rgba(13,110,253,.18); color: #7ab8ff; }
+[data-theme="dark"] .log-level-warning { background: rgba(255,193,7,.15);  color: #f0c040; }
+[data-theme="dark"] .log-level-error   { background: rgba(220,53,69,.18);  color: #f07080; }
+[data-theme="dark"] .log-level-critical,
+[data-theme="dark"] .log-level-alert,
+[data-theme="dark"] .log-level-emergency { background: rgba(220,53,69,.35); color: #f07080; }
+
+/* Audit action badges */
+[data-theme="dark"] .action-login   { background: rgba(25,135,84,.18);  color: #6ecc9a; }
+[data-theme="dark"] .action-logout  { background: rgba(108,117,125,.2); color: #adb5bd; }
+[data-theme="dark"] .action-create  { background: rgba(13,110,253,.18); color: #7ab8ff; }
+[data-theme="dark"] .action-update  { background: rgba(255,193,7,.15);  color: #f0c040; }
+[data-theme="dark"] .action-delete  { background: rgba(220,53,69,.18);  color: #f07080; }
+[data-theme="dark"] .action-view    { background: rgba(13,202,240,.15); color: #6bcde6; }
+[data-theme="dark"] .action-export  { background: rgba(111,66,193,.18); color: #c090e0; }
+[data-theme="dark"] .action-restore { background: rgba(25,135,84,.18);  color: #6ecc9a; }
+
+/* ─────────────────────────────────────────────────────────
+ * 35. READONLY / DISABLED INPUT FIELDS with bg-light
+ *     Used in org create/edit forms for auto-generated codes.
+ *     Must look like a disabled field, not a white block.
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] .form-control.bg-light,
+[data-theme="dark"] .form-control[readonly].bg-light {
+    background-color: var(--theme-card-header) !important;
+    color:            var(--theme-text-muted) !important;
+    border-color:     var(--theme-input-border) !important;
+}
+[data-theme="dark"] .input-group-text.bg-light {
+    background-color: var(--theme-card-header) !important;
+    border-color:     var(--theme-input-border) !important;
+    color:            var(--theme-text-muted) !important;
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 36. INFO PANEL CARDS  (card.bg-light in edit forms)
+ *     farm/edit, warehouse/edit, shop/edit info sidebars.
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] .card.bg-light {
+    background-color: var(--theme-card-header) !important;
+    border-color:     var(--theme-card-border) !important;
+}
+[data-theme="dark"] .card.bg-light .text-muted {
+    color: var(--theme-text-muted) !important;
+}
+[data-theme="dark"] .card.bg-light hr {
+    border-color: var(--theme-border);
+    opacity: 1;
+}
+[data-theme="dark"] .card.bg-light .table-borderless td {
+    color: var(--theme-text);
+    border-color: transparent;
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 37. DETAIL-META-ICON with bg-light
+ *     Small icon circles in org detail pages.
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] .detail-meta-icon.bg-light {
+    background-color: var(--theme-card-header) !important;
+    color:            var(--theme-text-muted) !important;
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 38. CARD-HEADER with bg-white
+ *     Used in notification compose views.
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] .card-header.bg-white {
+    background-color: var(--theme-card-header) !important;
+    border-color:     var(--theme-card-border) !important;
+    color:            var(--theme-text) !important;
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 39. POS CART HEADER  (bg-light inside .pos-cart)
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] .pos-cart .bg-light {
+    background-color: var(--theme-card-header) !important;
+}
+[data-theme="dark"] .pos-cart .border-bottom {
+    border-color: var(--theme-border) !important;
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 40. FILTER BAR INPUT GROUP
+ *     Search bars with input-group-text bg-light across
+ *     all module list views.
+ * ─────────────────────────────────────────────────────────*/
+[data-theme="dark"] .filter-bar .input-group-text,
+[data-theme="dark"] .filter-bar .input-group-text.bg-light {
+    background-color: var(--theme-card-header) !important;
+    border-color:     var(--theme-input-border) !important;
+    color:            var(--theme-text-muted) !important;
+}
+[data-theme="dark"] .filter-bar .form-control,
+[data-theme="dark"] .filter-bar .form-select {
+    background-color: var(--theme-input-bg);
+    border-color:     var(--theme-input-border);
+    color:            var(--theme-input-text);
+}
+
+/* ─────────────────────────────────────────────────────────
+ * 41. bg-white bg-opacity-20  (inside dark gradient banners)
+ *     These are icon circles inside coloured header banners.
+ *     They use bg-white with 20% opacity = translucent white.
+ *     They are already visually correct in dark mode because
+ *     the banner background is a dark gradient. No fix needed.
+ *     This comment documents that this is intentional.
+ * ─────────────────────────────────────────────────────────*/

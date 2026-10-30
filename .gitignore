@@ -1,0 +1,54 @@
+# =========================================================
+# ARSI AGRI-MANAGE (AAM)
+# File    : .gitignore
+# Purpose : Files and directories to exclude from Git.
+# =========================================================
+
+# ─── Environment & Credentials ───────────────────────────
+.env
+config/config.php
+
+# ─── Log Files ───────────────────────────────────────────
+storage/logs/*.log
+storage/logs/*.bak
+logs/
+
+# ─── Cache ───────────────────────────────────────────────
+storage/cache/*.cache
+
+# ─── Uploaded Files ──────────────────────────────────────
+storage/uploads/products/*.jpg
+storage/uploads/products/*.jpeg
+storage/uploads/products/*.png
+storage/uploads/products/*.webp
+storage/uploads/profiles/*
+storage/uploads/receipts/*
+
+# ─── Database Backups ────────────────────────────────────
+backups/*.sql
+backups/*.sql.gz
+database/backups/
+
+# ─── IDE / OS Files ──────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── Vendor (if Composer used in future) ─────────────────
+vendor/
+composer.lock
+
+# ─── PHP Error Logs ──────────────────────────────────────
+php_errors.log
+*.log.bak
+
+# ─── Keep empty directories ──────────────────────────────
+!storage/logs/.gitkeep
+!storage/cache/.gitkeep
+!storage/uploads/products/.gitkeep
+!storage/uploads/profiles/.gitkeep
+!storage/uploads/receipts/.gitkeep

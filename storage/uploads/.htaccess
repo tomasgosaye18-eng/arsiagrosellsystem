@@ -1,0 +1,13 @@
+# Block PHP execution inside uploads directory
+# Images are served, scripts are NOT executed
+
+<FilesMatch "\.(php|php3|php4|php5|phtml|pl|py|cgi|shtml)$">
+    Deny from all
+</FilesMatch>
+
+# Allow image and document types only
+<FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|pdf)$">
+    Allow from all
+</FilesMatch>
+
+Options -Indexes

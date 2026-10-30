@@ -1,0 +1,19 @@
+# =========================================================
+# ARSI AGRI-MANAGE (AAM)
+# File    : api/.htaccess
+# Purpose : Force ALL requests under /api/* to be handled
+#           by the main application bootstrap (index.php).
+#           The api/ directory exists physically but all
+#           routing is done via the PHP router.
+# =========================================================
+
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Rewrite everything to the parent index.php
+    # Use absolute path to avoid RewriteBase confusion
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ /arsiagro/app/index.php [QSA,L]
+</IfModule>

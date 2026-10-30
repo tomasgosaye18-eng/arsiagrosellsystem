@@ -1,0 +1,15 @@
+# Block PHP execution in uploads — images only
+<IfModule mod_authz_core.c>
+    <FilesMatch "\.(php|php3|php4|php5|phtml|phar|shtml|pl|py|cgi|sh|asp|aspx|jsp)$">
+        Require all denied
+    </FilesMatch>
+</IfModule>
+
+<IfModule !mod_authz_core.c>
+    <FilesMatch "\.(php|php3|php4|php5|phtml|phar|shtml|pl|py|cgi|sh|asp|aspx|jsp)$">
+        Order Allow,Deny
+        Deny from all
+    </FilesMatch>
+</IfModule>
+
+Options -Indexes

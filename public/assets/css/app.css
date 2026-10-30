@@ -1,0 +1,772 @@
+﻿/*
+ * =========================================================
+ * ARSI AGRI-MANAGE (AAM)
+ * File     : public/assets/css/app.css
+ * Purpose  : Custom application styles (Bootstrap 5 override
+ *            and AAM-specific component styles).
+ *            "Professional Minimal" design language.
+ * =========================================================
+ */
+
+/* â”€â”€â”€ CSS Variables â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+:root {
+    --aam-primary:      #0d6efd;
+    --aam-primary-dark: #0a58ca;
+    --aam-sidebar-bg:   #1a1d21;
+    --aam-sidebar-w:    240px;
+    --aam-topbar-h:     56px;
+    --aam-font:         'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --aam-border-r:     8px;
+    --aam-shadow-sm:    0 1px 4px rgba(0,0,0,.08);
+    --aam-shadow:       0 2px 12px rgba(0,0,0,.10);
+    --aam-transition:   0.18s ease-in-out;
+}
+
+/* â”€â”€â”€ Base â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+*,*::before,*::after { box-sizing: border-box; }
+
+body {
+    font-family: var(--aam-font);
+    background:  #f4f6fb;
+    color:       #212529;
+    font-size:   14px;
+    line-height: 1.6;
+}
+
+a { color: var(--aam-primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* â”€â”€â”€ Sidebar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+#sidebar {
+    width:        var(--aam-sidebar-w);
+    min-width:    var(--aam-sidebar-w);
+    background:   var(--aam-sidebar-bg);
+    position:     fixed;          /* fixed: stays on screen while page scrolls */
+    top:          var(--aam-topbar-h);
+    left:         0;
+    height:       calc(100vh - var(--aam-topbar-h));
+    overflow-y:   auto;
+    overflow-x:   hidden;
+    z-index:      1020;
+    transition:   width var(--aam-transition), min-width var(--aam-transition);
+    scrollbar-width: thin;
+    scrollbar-color: #3d4149 transparent;
+    flex-shrink:  0;
+}
+
+#sidebar::-webkit-scrollbar { width: 4px; }
+#sidebar::-webkit-scrollbar-thumb { background: #3d4149; border-radius: 4px; }
+
+/* Sidebar collapsed state */
+body.sidebar-collapsed #sidebar {
+    width:     64px;
+    min-width: 64px;
+}
+
+/* Content shifts left when sidebar collapses */
+body.sidebar-collapsed #page-content-wrapper {
+    margin-left: 64px;
+}
+
+
+body.sidebar-collapsed .sidebar-label,
+body.sidebar-collapsed .sidebar-divider,
+body.sidebar-collapsed .sidebar-user-info {
+    display: none !important;
+}
+
+body.sidebar-collapsed #sidebar .nav-link {
+    justify-content: center;
+    padding-left:    12px;
+    padding-right:   12px;
+}
+
+body.sidebar-collapsed #sidebar .bi-chevron-down { display: none; }
+
+/* Sidebar Links */
+.sidebar-link {
+    color:          rgba(255,255,255,.75);
+    border-radius:  var(--aam-border-r);
+    padding:        .5rem .75rem;
+    font-size:      .875rem;
+    display:        flex;
+    align-items:    center;
+    transition:     background var(--aam-transition), color var(--aam-transition);
+    white-space:    nowrap;
+    overflow:       hidden;
+}
+
+.sidebar-link:hover {
+    background: rgba(255,255,255,.08);
+    color:      #fff;
+    text-decoration: none;
+}
+
+.sidebar-link.active {
+    background: var(--aam-primary) !important;
+    color:      #fff !important;
+    font-weight: 600;
+}
+
+.sidebar-link-sub {
+    color:        rgba(255,255,255,.6);
+    padding:      .3rem .5rem;
+    border-radius: 6px;
+    font-size:    .82rem;
+    display:      block;
+    transition:   color var(--aam-transition);
+}
+
+.sidebar-link-sub:hover { color: #fff; text-decoration: none; }
+
+/* â”€â”€â”€ Topbar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+#topbar { height: var(--aam-topbar-h); z-index: 1030; }
+#topbar .form-control::placeholder { color: rgba(255,255,255,.5); }
+#topbar .form-control:focus { background: rgba(255,255,255,.2) !important; box-shadow: none; color: #fff; }
+
+/* â”€â”€â”€ Main Content â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+#page-content-wrapper { min-width: 0; min-height: calc(100vh - var(--aam-topbar-h)); display: flex; flex-direction: column; margin-left: var(--aam-sidebar-w); transition: margin-left var(--aam-transition); }
+#main-content { flex: 1; }
+
+/* â”€â”€â”€ Cards â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.card {
+    border:        1px solid #e8ecf0;
+    border-radius: var(--aam-border-r);
+    box-shadow:    var(--aam-shadow-sm);
+    background:    #fff;
+}
+
+.card-header {
+    background:    transparent;
+    border-bottom: 1px solid #e8ecf0;
+    font-weight:   600;
+    padding:       .875rem 1.25rem;
+}
+
+/* KPI / Stat Cards */
+.kpi-card {
+    border-left:   4px solid var(--aam-primary);
+    transition:    box-shadow var(--aam-transition);
+}
+.kpi-card:hover { box-shadow: var(--aam-shadow); }
+.kpi-card .kpi-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
+.kpi-card .kpi-value { font-size: 1.6rem; font-weight: 700; line-height: 1; }
+.kpi-card .kpi-label { font-size: .78rem; color: #6c757d; text-transform: uppercase; letter-spacing: .05em; }
+
+/* â”€â”€â”€ Tables â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.table { --bs-table-striped-bg: #f8f9fa; }
+.table th { font-weight: 600; font-size: .82rem; text-transform: uppercase; letter-spacing: .04em; color: #6c757d; border-top: none; }
+.table td { vertical-align: middle; }
+.table-hover tbody tr:hover { background: #f0f4ff; cursor: pointer; }
+
+/* â”€â”€â”€ Forms â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.form-label { font-weight: 500; font-size: .875rem; margin-bottom: .35rem; }
+.form-control, .form-select {
+    border-radius: var(--aam-border-r);
+    border-color:  #ced4da;
+    font-size:     .875rem;
+    transition:    border-color var(--aam-transition), box-shadow var(--aam-transition);
+}
+.form-control:focus, .form-select:focus {
+    border-color: var(--aam-primary);
+    box-shadow:   0 0 0 3px rgba(13,110,253,.15);
+}
+.form-control.is-invalid { border-color: #dc3545; }
+.invalid-feedback { font-size: .8rem; }
+.form-text { font-size: .78rem; }
+
+/* â”€â”€â”€ Buttons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.btn {
+    border-radius: var(--aam-border-r);
+    font-size:     .875rem;
+    font-weight:   500;
+    transition:    all var(--aam-transition);
+    padding:       .4rem .9rem;
+}
+.btn-icon { width: 34px; height: 34px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--aam-border-r); }
+
+/* â”€â”€â”€ Badges â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.badge { border-radius: 6px; font-weight: 500; }
+
+/* â”€â”€â”€ Status Badges â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.status-badge {
+    display:       inline-flex;
+    align-items:   center;
+    gap:           .3em;
+    padding:       .2em .6em;
+    border-radius: 20px;
+    font-size:     .78rem;
+    font-weight:   600;
+    text-transform: capitalize;
+}
+.status-pending     { background: #fff3cd; color: #856404; }
+.status-active      { background: #d1e7dd; color: #0f5132; }
+.status-completed   { background: #d1e7dd; color: #0f5132; }
+.status-received    { background: #d1e7dd; color: #0f5132; }
+.status-cancelled   { background: #f8d7da; color: #842029; }
+.status-voided      { background: #f8d7da; color: #842029; }
+.status-in_transit  { background: #cfe2ff; color: #084298; }
+.status-draft       { background: #e2e3e5; color: #41464b; }
+
+/* â”€â”€â”€ Pagination â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.page-link { border-radius: 6px !important; font-size: .85rem; margin: 0 2px; }
+
+/* â”€â”€â”€ Alerts â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.alert { border-radius: var(--aam-border-r); border: none; }
+.alert-success  { background: #d1e7dd; color: #0f5132; }
+.alert-danger   { background: #f8d7da; color: #842029; }
+.alert-warning  { background: #fff3cd; color: #856404; }
+.alert-info     { background: #cff4fc; color: #055160; }
+
+/* â”€â”€â”€ Loading Skeleton â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+    border-radius: 4px;
+}
+@keyframes skeleton-loading {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* â”€â”€â”€ Print Styles â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+@media print {
+    #topbar, #sidebar, .breadcrumb, .btn, .footer, .no-print { display: none !important; }
+    #page-content-wrapper { margin: 0 !important; }
+    body { background: #fff; }
+    .card { border: 1px solid #ccc; box-shadow: none; }
+}
+
+/* â”€â”€â”€ Mobile Responsive â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+@media (max-width: 767.98px) {
+    #sidebar {
+        position:  fixed;
+        top:       var(--aam-topbar-h);
+        left:      0;
+        z-index:   1025;
+        transform: translateX(-100%);
+        transition: transform var(--aam-transition);
+        height:    calc(100vh - var(--aam-topbar-h));
+        width:     min(280px, 85vw);
+        min-width: min(280px, 85vw);
+        max-width: 85vw;
+    }
+    #sidebar.show { transform: translateX(0); }
+    #page-content-wrapper { margin-left: 0 !important; }
+    .kpi-card .kpi-value { font-size: 1.3rem; }
+}
+
+/* ==========================================================
+ * PHASE 8A â€” Admin Dashboard & User Management Additions
+ * ==========================================================
+ */
+
+/* â”€â”€â”€ KPI Card Colour Variants â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.kpi-primary   { border-left-color: #0d6efd !important; }
+.kpi-success   { border-left-color: #198754 !important; }
+.kpi-danger    { border-left-color: #dc3545 !important; }
+.kpi-warning   { border-left-color: #ffc107 !important; }
+.kpi-info      { border-left-color: #0dcaf0 !important; }
+.kpi-secondary { border-left-color: #6c757d !important; }
+
+/* â”€â”€â”€ Card Hover Lift â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.card-hover {
+    transition: box-shadow var(--aam-transition), transform var(--aam-transition);
+    cursor: pointer;
+}
+.card-hover:hover {
+    box-shadow: var(--aam-shadow);
+    transform: translateY(-1px);
+}
+
+/* â”€â”€â”€ Quick Action Buttons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.quick-action-btn {
+    min-height: 60px;
+    font-size:  .72rem !important;
+    border-radius: var(--aam-border-r) !important;
+    transition: all var(--aam-transition);
+}
+.quick-action-btn:hover { transform: translateY(-2px); box-shadow: var(--aam-shadow-sm); }
+
+/* â”€â”€â”€ Activity Feed â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.activity-feed .activity-item:last-child,
+.activity-feed > div:last-child {
+    border-bottom: none !important;
+}
+
+/* â”€â”€â”€ Action Buttons in Table â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.btn-action {
+    width:  30px;
+    height: 30px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .8rem;
+    border-radius: 6px !important;
+}
+
+/* â”€â”€â”€ User Name Link â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.user-name-link:hover { color: var(--aam-primary) !important; text-decoration: underline; }
+
+/* â”€â”€â”€ Table Sort Links â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+th a.text-decoration-none:hover { color: var(--aam-primary) !important; }
+
+/* â”€â”€â”€ Nav Tabs (sm) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.nav-tabs-sm .nav-link {
+    font-size: .78rem;
+    padding: .35rem .65rem;
+}
+
+/* â”€â”€â”€ Strength Progress Bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+#strengthBar {
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+/* â”€â”€â”€ Pagination â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.pagination { gap: 2px; flex-wrap: wrap; }
+.pagination .page-link { min-width: 34px; text-align: center; }
+
+/* â”€â”€â”€ Badge subtle variants (BS5.3 compat) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.bg-success-subtle { background-color: rgba(25,135,84,.12) !important; }
+.bg-primary-subtle { background-color: rgba(13,110,253,.12) !important; }
+.bg-danger-subtle  { background-color: rgba(220,53,69,.12)  !important; }
+.bg-warning-subtle { background-color: rgba(255,193,7,.15)  !important; }
+.bg-info-subtle    { background-color: rgba(13,202,240,.12) !important; }
+.text-success      { color: #198754 !important; }
+.text-primary      { color: #0d6efd !important; }
+.text-danger       { color: #dc3545 !important; }
+.text-info         { color: #0dcaf0 !important; }
+
+/* â”€â”€â”€ Font Monospace for temp passwords â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.font-monospace { font-family: 'Consolas', 'Courier New', monospace !important; letter-spacing: .05em; }
+
+/* â”€â”€â”€ Responsive adjustments â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+@media (max-width: 575.98px) {
+    .btn-action { width: 28px; height: 28px; font-size: .72rem; }
+    .kpi-card .kpi-value { font-size: 1.3rem; }
+}
+
+/* ==========================================================
+ * PHASE 9 â€” Dashboard Refinement Additions
+ * ==========================================================
+ */
+
+/* â”€â”€â”€ Sidebar Section Labels â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.sidebar-section-label {
+    display:        block;
+    font-size:      .6rem;
+    font-weight:    700;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color:          rgba(255,255,255,.35);
+    padding:        .5rem .5rem .2rem;
+    user-select:    none;
+}
+
+/* â”€â”€â”€ Row hover utility (for workflow status links) â”€â”€â”€â”€â”€â”€â”€ */
+.hover-bg-light:hover { background: #f8f9fa; }
+a.hover-bg-light { transition: background var(--aam-transition); }
+
+/* â”€â”€â”€ Status Pills (used in farm harvest table etc.) â”€â”€â”€â”€â”€â”€â”€ */
+.status-pill {
+    display:        inline-flex;
+    align-items:    center;
+    gap:            .3em;
+    padding:        .15em .55em;
+    border-radius:  20px;
+    font-size:      .72rem;
+    font-weight:    600;
+    white-space:    nowrap;
+}
+.status-pill.active   { background: #d1e7dd; color: #0f5132; }
+.status-pill.inactive { background: #f8d7da; color: #842029; }
+
+/* â”€â”€â”€ Dashboard KPI border-top cards â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.card[style*="border-top"] {
+    border-left:   none !important;
+}
+
+/* â”€â”€â”€ Alert layout fix for dashboard alerts â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.alert .btn { white-space: nowrap; }
+
+/* â”€â”€â”€ Audit table â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.audit-table td,
+.audit-table th { font-size: .82rem; }
+.audit-table tbody tr:hover { background: #f0f4ff; }
+
+/* â”€â”€â”€ Workflow step cards â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.workflow-step {
+    border-left: 3px solid transparent;
+    transition:  border-color var(--aam-transition);
+}
+.workflow-step:hover { border-left-color: var(--aam-primary); }
+
+/* â”€â”€â”€ POS action button â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.btn-pos-primary {
+    height:        56px;
+    font-size:     1rem;
+    font-weight:   700;
+    border-radius: var(--aam-border-r);
+    letter-spacing: .03em;
+}
+
+/* â”€â”€â”€ Empty state within cards â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.empty-state {
+    text-align: center;
+    padding:    2.5rem 1rem;
+    color:      #6c757d;
+}
+.empty-state .empty-icon {
+    font-size:  2.5rem;
+    opacity:    .3;
+    display:    block;
+    margin-bottom: .75rem;
+}
+
+/* â”€â”€â”€ Responsive: hide sidebar section labels on collapse â”€â”€ */
+body.sidebar-collapsed .sidebar-section-label { display: none !important; }
+
+/* â”€â”€ Global search result categories â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.aam-search-group-label {
+    font-size:      .68rem;
+    font-weight:    700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color:          #6c757d;
+    padding:        .4rem .75rem .15rem;
+    display:        block;
+    pointer-events: none;
+    user-select:    none;
+}
+#searchResults .dropdown-item {
+    font-size: .855rem;
+    padding:   .3rem .75rem;
+}
+#searchResults .dropdown-item .aam-sr-icon {
+    width:     18px;
+    text-align: center;
+    flex-shrink: 0;
+}
+#searchResults .aam-sr-empty,
+#searchResults .aam-sr-error {
+    padding:   .6rem .75rem;
+    font-size: .85rem;
+    color:     #6c757d;
+}
+#searchResults .aam-sr-footer {
+    border-top:  1px solid #e8ecf0;
+    padding:     .35rem .75rem;
+    font-size:   .75rem;
+    color:       #6c757d;
+    text-align:  center;
+}
+
+
+
+
+/* ==========================================================
+
+/* ==========================================================
+ * AAM — RESPONSIVE DESIGN  (single authoritative block)
+ * Every mobile rule is inside a @media query.
+ * No global overrides of existing desktop styles.
+ * ==========================================================
+ * LAYOUT MODEL (desktop ≥ 992px):
+ *   - #sidebar  : position:fixed, left:0, width:240px
+ *   - #page-content-wrapper : margin-left:240px
+ *   - Sidebar collapsed → width:64px, margin-left:64px
+ *
+ * LAYOUT MODEL (tablet 768-991px):
+ *   - #sidebar  : position:fixed, translateX(-100%) hidden
+ *   - #page-content-wrapper : margin-left:0
+ *   - Hamburger shows/hides sidebar with backdrop
+ *
+ * LAYOUT MODEL (mobile <768px):
+ *   - Same as tablet but sidebar narrower (min(280px,85vw))
+ * ==========================================================
+ */
+
+/* ── NEW COMPONENTS (only new HTML, never override existing) */
+
+#sidebarBackdrop {
+    display:         none;
+    position:        fixed;
+    inset:           0;
+    top:             var(--aam-topbar-h, 56px);
+    background:      rgba(0,0,0,.5);
+    z-index:         1019;  /* just below sidebar z-index:1020 */
+    backdrop-filter: blur(2px);
+}
+#sidebarBackdrop.show { display: block; }
+
+#mobileSearchOverlay {
+    display:     none;
+    position:    fixed;
+    top:         0; left: 0; right: 0;
+    height:      var(--aam-topbar-h, 56px);
+    z-index:     1050;
+    background:  #0d6efd;
+    padding:     .5rem .75rem;
+    align-items: center;
+    gap:         .5rem;
+}
+#mobileSearchOverlay.show { display: flex; }
+
+#mobileSearchResults {
+    position:      absolute;
+    top:           100%; left: 0; right: 0;
+    background:    #fff;
+    max-height:    60vh;
+    overflow-y:    auto;
+    box-shadow:    0 8px 24px rgba(0,0,0,.18);
+    border-radius: 0 0 8px 8px;
+    z-index:       1051;
+}
+
+.btn-mobile-search { display: none; }  /* hidden on desktop */
+
+.skip-link {
+    position:      absolute;
+    top:           -100px; left: 1rem;
+    background:    var(--aam-primary, #0d6efd);
+    color:         #fff;
+    padding:       .5rem 1rem;
+    border-radius: 0 0 6px 6px;
+    z-index:       9999;
+    font-size:     .875rem;
+    text-decoration: none;
+    transition:    top .2s;
+}
+.skip-link:focus { top: 0; }
+
+.overflow-x-auto { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+/* ── DESKTOP (≥ 992px) ─────────────────────────────────── */
+@media (min-width: 992px) {
+    /* Additional collapsed-state hiding (base rules in original CSS) */
+    body.sidebar-collapsed #sidebar .sidebar-zone-biz,
+    body.sidebar-collapsed #sidebar .sidebar-admin-zone,
+    body.sidebar-collapsed #sidebar .px-3.py-3.border-bottom,
+    body.sidebar-collapsed #sidebar .px-3.py-2.border-top {
+        display: none !important;
+    }
+    body.sidebar-collapsed #sidebar .bi-chevron-down,
+    body.sidebar-collapsed #sidebar .collapse {
+        display: none !important;
+    }
+}
+
+/* ── TABLET (768px – 991px) ────────────────────────────── */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .btn-mobile-search { display: inline-flex; }
+
+    #sidebar {
+        z-index:    1025 !important;
+        transform:  translateX(-100%);
+        transition: transform var(--aam-transition) !important;
+        width:      var(--aam-sidebar-w, 240px) !important;
+        min-width:  var(--aam-sidebar-w, 240px) !important;
+    }
+    #sidebar.show { transform: translateX(0); }
+
+    #page-content-wrapper {
+        margin-left: 0 !important;
+        width: 100%;
+    }
+
+    html, body { overflow-x: hidden; }
+}
+
+/* ── MOBILE (< 768px) ─────────────────────────────────── */
+@media (max-width: 767.98px) {
+    .btn-mobile-search { display: inline-flex; }
+
+    #sidebar {
+        z-index:    1025 !important;
+        transform:  translateX(-100%);
+        transition: transform var(--aam-transition) !important;
+        width:      min(280px, 85vw) !important;
+        min-width:  min(280px, 85vw) !important;
+        max-width:  85vw !important;
+    }
+    #sidebar.show { transform: translateX(0); }
+
+    #page-content-wrapper {
+        margin-left: 0 !important;
+        width:       100%;
+        overflow-x:  hidden;
+    }
+
+    html, body { overflow-x: hidden; }
+
+    #main-content { padding: 1rem !important; }
+
+    .sidebar-link     { min-height: 40px; }
+    .sidebar-link-sub { min-height: 34px; }
+
+    .kpi-card .kpi-value,
+    .card .fw-bold.fs-3 { font-size: 1.3rem !important; }
+
+    .d-flex.align-items-center.justify-content-between.mb-3,
+    .d-flex.align-items-center.justify-content-between.mb-4 {
+        flex-wrap: wrap; gap: .5rem;
+    }
+
+    .breadcrumb { font-size: .78rem; flex-wrap: wrap; }
+
+    .footer .row { flex-direction: column; gap: .35rem; }
+    .footer .col-md-6.text-md-end { text-align: left !important; }
+
+    .pagination { flex-wrap: wrap; gap: 2px; }
+
+    .d-flex.justify-content-between.align-items-center.px-3.py-2.border-top {
+        flex-direction: column; gap: .5rem;
+        align-items: flex-start !important;
+    }
+
+    .alert.d-flex.align-items-center.justify-content-between {
+        flex-wrap: wrap; gap: .5rem;
+    }
+
+    .nav-tabs {
+        flex-wrap: nowrap; overflow-x: auto;
+        -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    }
+    .nav-tabs::-webkit-scrollbar { display: none; }
+    .nav-tabs .nav-link { white-space: nowrap; }
+
+    .table-responsive { -webkit-overflow-scrolling: touch; }
+
+    dl.row .col-sm-4, dl.row .col-sm-8,
+    dl.row .col-sm-5, dl.row .col-sm-7 {
+        flex: 0 0 100%; max-width: 100%;
+    }
+
+    .card-body .d-none.d-md-flex {
+        display: flex !important; flex-wrap: wrap;
+        margin-top: .5rem; gap: .4rem; width: 100%;
+    }
+    .card-body.d-flex.align-items-center.gap-3 { flex-wrap: wrap; }
+
+    #receivingForm table,
+    #resubmitForm  table { min-width: 700px; }
+    #transferForm .table-responsive table { min-width: 750px; }
+
+    .d-flex.gap-2.justify-content-end { flex-wrap: wrap; }
+    .d-flex.gap-2.justify-content-end .btn {
+        flex: 1 1 auto; min-width: 110px;
+    }
+
+    /* POS terminal: stack products above cart */
+    .pos-wrap {
+        flex-direction: column; height: auto !important; min-height: auto !important;
+    }
+    .pos-products {
+        flex: none !important; width: 100%;
+        max-height: 55vh; overflow-y: auto !important;
+        padding: 0 0 8px 0 !important;
+    }
+    .pos-cart { width: 100% !important; margin-left: 0 !important; }
+    .cart-items { max-height: 35vh; }
+    .cart-qty-input { min-height: auto !important; height: auto !important; }
+    .cart-qty-ctrl button { min-height: auto !important; height: 22px !important; }
+}
+
+/* ── SMALL MOBILE (< 576px) ───────────────────────────── */
+@media (max-width: 575.98px) {
+    #main-content { padding: .75rem !important; }
+
+    /* Filter form cols: stack on mobile */
+    .card-body .row.g-2.align-items-end > [class*="col-md"] {
+        width: 100% !important; flex: 0 0 100% !important;
+    }
+    .card-body .row.g-2.align-items-end > .col-6,
+    .card-body .row.g-2.align-items-end > .col-6.col-md-2,
+    .card-body .row.g-2.align-items-end > .col-6.col-md-3 {
+        width: 50% !important; flex: 0 0 50% !important;
+    }
+    .card-body .row.g-2.align-items-end > .col-auto {
+        flex: 0 0 auto; width: auto;
+    }
+
+    /* Also for farm dispatch/harvest forms (col-md only) */
+    .card-body.py-2.px-3 .row.g-2 > .col-md-2,
+    .card-body.py-2.px-3 .row.g-2 > .col-md-3,
+    .card-body.py-2.px-3 .row.g-2 > .col-md-4 {
+        width: 100% !important; max-width: 100% !important;
+    }
+
+    /* 16px font prevents iOS auto-zoom on input focus */
+    .form-control, .form-select, textarea { font-size: 1rem !important; }
+
+    .form-control, .form-select { min-height: 40px; }
+    .form-control-sm, .form-select-sm { min-height: 34px; }
+    .btn    { min-height: 38px; }
+    .btn-sm { min-height: 32px; padding: .3rem .65rem; }
+
+    .modal-dialog { margin: .5rem; max-width: calc(100vw - 1rem); }
+    .modal-footer { flex-wrap: wrap; gap: .5rem; }
+    .modal-footer .btn { flex: 1 1 auto; min-width: 100px; }
+
+    .card-body { padding: .875rem; }
+    .card-header.d-flex { flex-wrap: wrap; gap: .35rem; }
+
+    .kpi-card .kpi-value,
+    .card .fw-bold.fs-3 { font-size: 1.15rem !important; }
+
+    .card-body .d-flex.align-items-center.gap-0.flex-wrap {
+        overflow-x: auto; flex-wrap: nowrap !important;
+        -webkit-overflow-scrolling: touch; padding-bottom: .25rem;
+    }
+
+    .card.border-success .btn,
+    .card.border-danger  .btn { width: 100%; }
+
+    .pagination .page-link { min-width: 30px; font-size: .78rem; padding: .25rem .4rem; }
+
+    .dropdown-menu.dropdown-menu-end[aria-labelledby="notificationBell"] {
+        position: fixed !important;
+        right: .5rem !important; left: .5rem !important;
+        top: calc(var(--aam-topbar-h, 56px) + 4px) !important;
+        transform: none !important;
+        min-width: calc(100vw - 1rem) !important;
+        max-height: 75vh !important; overflow-y: auto !important;
+    }
+}
+
+/* ── EXTRA-SMALL (< 390px) ────────────────────────────── */
+@media (max-width: 390px) {
+    body  { font-size: 13px; }
+    h5    { font-size: 1rem; }
+    h6    { font-size: .9rem; }
+    small, .small { font-size: .76rem; }
+
+    #main-content { padding: .6rem !important; }
+
+    .table th, .table td { font-size: .7rem; }
+
+    .kpi-card .kpi-value,
+    .card .fw-bold.fs-3 { font-size: 1rem !important; }
+
+    .modal-dialog { margin: .25rem; }
+}
+
+/* ── DARK MODE ─────────────────────────────────────────── */
+/*
+ * The legacy body.dark-mode / [data-bs-theme="dark"] stubs have been
+ * replaced by the dedicated theme.css layer which uses
+ * [data-theme="dark"] scoped on <html>.
+ * These rules are intentionally removed to avoid conflicts.
+ * See: public/assets/css/theme.css
+ */
+
+/* ── PRINT ─────────────────────────────────────────────── */
+@media print {
+    #sidebarBackdrop, #mobileSearchOverlay,
+    .btn-mobile-search, .skip-link { display: none !important; }
+    .table-responsive { overflow: visible !important; }
+    .table-responsive > .table { min-width: 0 !important; }
+}

@@ -1,0 +1,1285 @@
+/*
+ * ============================================================
+ * AU-AgroSale — Orders CSS  (Step 9 — My Orders)
+ * public/assets/customer/css/orders.css
+ * ============================================================
+ * Covers:
+ *   - My Orders list (index) with toolbar, filters, search,
+ *     sort, pagination, empty state
+ *   - Order Detail page with timeline, item rows, pickup info
+ *   - Receipt / printable page
+ * All rules scoped under .customer-app — zero bleed to
+ * admin / dashboard / POS styles.
+ * Dark-mode tokens come from variables.css automatically.
+ * ============================================================
+ */
+
+/* ══════════════════════════════════════════════════════════
+   SHARED LAYOUT
+   ══════════════════════════════════════════════════════════ */
+.customer-app .cord-layout {
+    padding-top: var(--c-space-8);
+    padding-bottom: var(--c-space-16);
+    max-width: 960px;
+}
+/* Detail page needs a bit more width */
+.customer-app .cord-layout--detail {
+    max-width: 1040px;
+}
+
+/* ── Page header ──────────────────────────────────────────── */
+.customer-app .cord-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--c-space-4);
+    margin-bottom: var(--c-space-5);
+    flex-wrap: wrap;
+}
+.customer-app .cord-header__left { display: flex; flex-direction: column; gap: 2px; }
+.customer-app .cord-header__cta  { align-self: center; flex-shrink: 0; }
+
+.customer-app .cord-title {
+    font-size: var(--c-size-3xl);
+    font-weight: var(--c-weight-extrabold);
+    color: var(--c-text);
+    margin: 0 0 var(--c-space-1);
+}
+.customer-app .cord-sub {
+    color: var(--c-text-muted);
+    font-size: var(--c-size-sm);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--c-space-2);
+    flex-wrap: wrap;
+}
+.customer-app .cord-total-count {
+    display: inline-flex;
+    align-items: center;
+    background: var(--c-primary-light);
+    color: var(--c-primary);
+    font-weight: var(--c-weight-semi);
+    font-size: var(--c-size-xs);
+    padding: 2px 10px;
+    border-radius: var(--c-radius-pill);
+}
+
+/* ══════════════════════════════════════════════════════════
+   SEARCH + SORT TOOLBAR
+   ══════════════════════════════════════════════════════════ */
+.customer-app .cord-toolbar {
+    display: flex;
+    align-items: center;
+    gap: var(--c-space-3);
+    margin-bottom: var(--c-space-4);
+    flex-wrap: wrap;
+}
+/* Search form */
+.customer-app .cord-search-form {
+    flex: 1 1 260px;
+    min-width: 0;
+}
+.customer-app .cord-search-wrap {
+    display: flex;
+    align-items: center;
+    position: relative;
+    background: var(--c-input-bg);
+    border: 1.5px solid var(--c-input-border);
+    border-radius: var(--c-radius-pill);
+    overflow: hidden;
+    transition: border-color .14s, box-shadow .14s;
+}
+.customer-app .cord-search-wrap:focus-within {
+    border-color: var(--c-input-border-focus);
+    box-shadow: var(--c-input-shadow-focus);
+}
+.customer-app .cord-search-icon {
+    position: absolute;
+    left: 14px;
+    color: var(--c-text-muted);
+    font-size: 15px;
+    pointer-events: none;
+}
+.customer-app .cord-search-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 40px;
+    padding: 0 10px 0 36px;
+    border: none;
+    background: transparent;
+    color: var(--c-input-text);
+    font-size: var(--c-size-sm);
+    font-family: var(--c-font);
+    outline: none;
+}
+.customer-app .cord-search-input::placeholder { color: var(--c-input-placeholder); }
+.customer-app .cord-search-clear {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    margin: 0 4px;
+    border-radius: 50%;
+    color: var(--c-text-muted);
+    font-size: 16px;
+    flex-shrink: 0;
+    text-decoration: none;
+    background: var(--c-bg-alt);
+    transition: background .12s;
+}
+.customer-app .cord-search-clear:hover {
+    background: var(--c-danger-bg);
+    color: var(--c-danger);
+}
+.customer-app .cord-search-btn {
+    flex-shrink: 0;
+    border-radius: 0 var(--c-radius-pill) var(--c-radius-pill) 0;
+    height: 40px;
+    padding: 0 var(--c-space-4);
+    font-size: var(--c-size-xs);
+}
+/* Sort */
+.customer-app .cord-sort-wrap {
+    display: flex;
+    align-items: center;
+    gap: var(--c-space-2);
+    flex-shrink: 0;
+}
+.customer-app .cord-sort-label {
+    font-size: var(--c-size-sm);
+    color: var(--c-text-muted);
+    white-space: nowrap;
+}
+.customer-app .cord-sort-select {
+    height: 38px;
+    padding: 0 var(--c-space-4) 0 var(--c-space-3);
+    border: 1.5px solid var(--c-input-border);
+    border-radius: var(--c-radius-md);
+    background: var(--c-input-bg);
+    color: var(--c-input-text);
+    font-size: var(--c-size-sm);
+    font-family: var(--c-font);
+    cursor: pointer;
+    outline: none;
+    appearance: auto;
+}
+.customer-app .cord-sort-select:focus {
+    border-color: var(--c-input-border-focus);
+    box-shadow: var(--c-input-shadow-focus);
+}
+
+/* ══════════════════════════════════════════════════════════
+   FILTER TABS
+   ══════════════════════════════════════════════════════════ */
+.customer-app .cord-filters {
+    display: flex;
+    align-items: center;
+    gap: var(--c-space-1);
+    margin-bottom: var(--c-space-4);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px; /* room for focus ring */
+}
+.customer-app .cord-filters::-webkit-scrollbar { display: none; }
+
+.customer-app .cord-filter-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 14px;
+    border-radius: var(--c-radius-pill);
+    font-size: var(--c-size-xs);
+    font-weight: var(--c-weight-semi);
+    color: var(--c-text-muted);
+    background: var(--c-surface);
+    border: 1.5px solid var(--c-border);
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--c-transition-fast);
+    flex-shrink: 0;
+}
+.customer-app .cord-filter-tab:hover {
+    border-color: var(--c-primary);
+    color: var(--c-primary);
+    background: var(--c-primary-light);
+}
+.customer-app .cord-filter-tab--active {
+    background: var(--c-primary);
+    border-color: var(--c-primary);
+    color: #fff;
+}
+.customer-app .cord-filter-tab--active:hover {
+    background: var(--c-primary-hover);
+    border-color: var(--c-primary-hover);
+    color: #fff;
+}
+.customer-app .cord-filter-tab i { font-size: 13px; }
+/* Hide label text on very small screens — icon only */
+@media (max-width: 420px) {
+    .customer-app .cord-filter-tab__label { display: none; }
+    .customer-app .cord-filter-tab { padding: 7px 10px; }
+}
+
+/* ── Search notice ────────────────────────────────────────── */
+.customer-app .cord-search-notice {
+    display: flex;
+    align-items: center;
+    gap: var(--c-space-2);
+    background: var(--c-info-bg);
+    color: var(--c-info);
+    border-radius: var(--c-radius-md);
+    padding: var(--c-space-3) var(--c-space-4);
+    font-size: var(--c-size-sm);
+    margin-bottom: var(--c-space-4);
+}
+.customer-app .cord-search-notice__clear {
+    margin-left: auto;
+    color: var(--c-info);
+    font-weight: var(--c-weight-semi);
+    text-decoration: underline;
+    white-space: nowrap;
+}
+.customer-app .cord-search-notice__clear:hover { color: var(--c-primary); }
+
+/* ══════════════════════════════════════════════════════════
+   ORDER LIST CARDS
+   ══════════════════════════════════════════════════════════ */
+.customer-app .cord-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-space-3);
+}
+.customer-app .cord-item {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--c-radius-lg);
+    padding: var(--c-space-5) var(--c-space-6);
+    box-shadow: var(--c-shadow-xs);
+    transition: var(--c-transition);
+    border-left: 4px solid transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+.customer-app .cord-item:hover {
+    box-shadow: var(--c-shadow-md);
+    transform: translateY(-1px);
+}
+/* Left-border colour by status badge */
+.customer-app .cord-item--success  { border-left-color: var(--c-success); }
+.customer-app .cord-item--info     { border-left-color: var(--c-info); }
+.customer-app .cord-item--warning  { border-left-color: var(--c-warning); }
+.customer-app .cord-item--primary  { border-left-color: var(--c-primary); }
+.customer-app .cord-item--secondary{ border-left-color: var(--c-text-muted); }
+.customer-app .cord-item--danger   { border-left-color: var(--c-danger); }
+
+/* Top row */
+.customer-app .cord-item__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--c-space-3);
+    margin-bottom: var(--c-space-3);
+}
+.customer-app .cord-item__ref {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+}
+.customer-app .cord-item__order-ref {
+    font-size: var(--c-size-base);
+    font-weight: var(--c-weight-extrabold);
+    color: var(--c-text);
+    font-family: var(--c-font-mono);
+    letter-spacing: .03em;
+}
+.customer-app .cord-item__date {
+    font-size: var(--c-size-xs);
+    color: var(--c-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.customer-app .cord-item__time {
+    opacity: .7;
+}
+.customer-app .cord-item__badges {
+    display: flex;
+    gap: var(--c-space-2);
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    flex-shrink: 0;
+}
+
+/* Mid row */
+.customer-app .cord-item__mid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--c-space-4);
+    margin-bottom: var(--c-space-3);
+}
+.customer-app .cord-item__details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+.customer-app .cord-item__shop,
+.customer-app .cord-item__item-count,
+.customer-app .cord-item__payment-method {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--c-size-sm);
+    color: var(--c-text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.customer-app .cord-item__shop i,
+.customer-app .cord-item__item-count i,
+.customer-app .cord-item__payment-method i {
+    font-size: 13px;
+    flex-shrink: 0;
+}
+.customer-app .cord-item__total {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    flex-shrink: 0;
+}
+.customer-app .cord-item__total-label {
+    font-size: var(--c-size-xs);
+    color: var(--c-text-muted);
+}
+.customer-app .cord-item__total-val {
+    font-size: var(--c-size-xl);
+    font-weight: var(--c-weight-extrabold);
+    color: var(--c-price);
+}
+
+/* Action row */
+.customer-app .cord-item__actions {
+    display: flex;
+    gap: var(--c-space-2);
+    flex-wrap: wrap;
+    align-items: center;
+    padding-top: var(--c-space-1);
+    border-top: 1px solid var(--c-border-muted);
+    margin-top: var(--c-space-1);
+}
+/* "Ready for Pickup!" inline badge */
+.customer-app .cord-item__ready-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 12px;
+    background: var(--c-success-bg);
+    color: var(--c-success);
+    border-radius: var(--c-radius-pill);
+    font-size: var(--c-size-xs);
+    font-weight: var(--c-weight-semi);
+    animation: cord-pulse 2s ease-in-out infinite;
+}
+@keyframes cord-pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: .7; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   BADGES  (scoped re-declaration for orders context)
+   ══════════════════════════════════════════════════════════ */
+.customer-app .c-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: var(--c-radius-pill);
+    font-size: var(--c-size-xs);
+    font-weight: var(--c-weight-semi);
+    white-space: nowrap;
+}
+.customer-app .c-badge-success  { background: var(--c-success-bg);  color: var(--c-success);    }
+.customer-app .c-badge-info     { background: var(--c-info-bg);      color: var(--c-info);       }
+.customer-app .c-badge-warning  { background: var(--c-warning-bg);   color: var(--c-warning);    }
+.customer-app .c-badge-primary  { background: var(--c-primary-light);color: var(--c-primary);    }
+.customer-app .c-badge-secondary{ background: var(--c-bg-alt);       color: var(--c-text-muted); }
+.customer-app .c-badge-danger   { background: var(--c-danger-bg);    color: var(--c-danger);     }
+
+/* ══════════════════════════════════════════════════════════
+   EMPTY STATE
+   ══════════════════════════════════════════════════════════ */
+.customer-app .cp-empty-state {
+    text-align: center;
+    padding: var(--c-space-16) var(--c-space-8);
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--c-radius-xl);
+    box-shadow: var(--c-shadow-xs);
+}
+.customer-app .cp-empty-state__icon {
+    font-size: 3.5rem;
+    margin-bottom: var(--c-space-4);
+    line-height: 1;
+}
+.customer-app .cp-empty-state__title {
+    font-size: var(--c-size-xl);
+    font-weight: var(--c-weight-bold);
+    color: var(--c-text);
+    margin: 0 0 var(--c-space-3);
+}
+.customer-app .cp-empty-state__desc {
+    color: var(--c-text-muted);
+    font-size: var(--c-size-sm);
+    max-width: 400px;
+    margin: 0 auto var(--c-space-6);
+    line-height: var(--c-leading-base);
+}
+.customer-app .cp-empty-state__actions {
+    display: flex;
+    gap: var(--c-space-3);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ══════════════════════════════════════════════════════════
+   PAGINATION
+   ══════════════════════════════════════════════════════════ */
+.customer-app .cord-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--c-space-2);
+    margin-top: var(--c-space-8);
+    flex-wrap: wrap;
+}
+.customer-app .cord-pagination__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 14px;
+    border-radius: var(--c-radius-md);
+    font-size: var(--c-size-sm);
+    font-weight: var(--c-weight-medium);
+    color: var(--c-text);
+    background: var(--c-surface);
+    border: 1.5px solid var(--c-border);
+    text-decoration: none;
+    transition: var(--c-transition-fast);
+}
+.customer-app .cord-pagination__btn:hover {
+    border-color: var(--c-primary);
+    color: var(--c-primary);
+    background: var(--c-primary-light);
+}
+.customer-app .cord-pagination__btn--disabled {
+    opacity: .4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+.customer-app .cord-pagination__pages {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.customer-app .cord-pagination__page {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    border-radius: var(--c-radius-md);
+    font-size: var(--c-size-sm);
+    font-weight: var(--c-weight-medium);
+    color: var(--c-text);
+    background: var(--c-surface);
+    border: 1.5px solid var(--c-border);
+    text-decoration: none;
+    transition: var(--c-transition-fast);
+}
+.customer-app .cord-pagination__page:hover {
+    border-color: var(--c-primary);
+    color: var(--c-primary);
+    background: var(--c-primary-light);
+}
+.customer-app .cord-pagination__page--current {
+    background: var(--c-primary);
+    border-color: var(--c-primary);
+    color: #fff;
+    font-weight: var(--c-weight-bold);
+    pointer-events: none;
+}
+.customer-app .cord-pagination__ellipsis {
+    padding: 0 4px;
+    color: var(--c-text-muted);
+    font-size: var(--c-size-sm);
+}
+.customer-app .cord-pagination__info {
+    text-align: center;
+    font-size: var(--c-size-xs);
+    color: var(--c-text-muted);
+    margin-top: var(--c-space-3);
+}
+
+/* ══════════════════════════════════════════════════════════
+   ORDER DETAIL PAGE
+   ══════════════════════════════════════════════════════════ */
+.customer-app .cord-detail-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--c-space-4);
+    margin-bottom: var(--c-space-6);
+    flex-wrap: wrap;
+}
+.customer-app .cord-detail-header__left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.customer-app .cord-detail-header__badges {
+    display: flex;
+    gap: var(--c-space-2);
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+.customer-app .cord-detail-title {
+    font-size: var(--c-size-2xl);
+    font-weight: var(--c-weight-extrabold);
+    color: var(--c-text);
+    font-family: var(--c-font-mono);
+    margin: 0;
+    letter-spacing: .03em;
+}
+.customer-app .cord-detail-date {
+    font-size: var(--c-size-sm);
+    color: var(--c-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Cancelled / Ready banners */
+.customer-app .cord-cancelled-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--c-space-3);
+    background: var(--c-danger-bg);
+    color: var(--c-danger);
+    border-radius: var(--c-radius-md);
+    padding: var(--c-space-4) var(--c-space-5);
+    font-size: var(--c-size-sm);
+    margin-bottom: var(--c-space-5);
+    border: 1px solid rgba(198,40,40,.18);
+}
+.customer-app .cord-cancelled-notice i { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.customer-app .cord-cancelled-notice div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.customer-app .cord-ready-banner {
+    display: flex;
+    align-items: center;
+    gap: var(--c-space-4);
+    background: var(--c-success-bg);
+    color: var(--c-success);
+    border-radius: var(--c-radius-md);
+    padding: var(--c-space-4) var(--c-space-5);
+    font-size: var(--c-size-sm);
+    margin-bottom: var(--c-space-5);
+    border: 1px solid rgba(46,125,50,.22);
+    animation: cord-pulse 2s ease-in-out infinite;
+}
+.customer-app .cord-ready-banner__icon {
+    font-size: 28px;
+    flex-shrink: 0;
+}
+.customer-app .cord-ready-banner div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.customer-app .cord-ready-banner strong { font-weight: var(--c-weight-bold); }
+.customer-app .cord-ready-banner span   { font-size: var(--c-size-xs); opacity: .85; }
+
+/* 2-column grid */
+.customer-app .cord-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: var(--c-space-6);
+    align-items: start;
+}
+.customer-app .cord-detail-main { display: flex; flex-direction: column; gap: var(--c-space-5); }
+.customer-app .cord-detail-side { display: flex; flex-direction: column; gap: var(--c-space-5); }
+
+/* ── Generic card ─────────────────────────────────────────── */
+.customer-app .cord-card {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--c-radius-lg);
+    padding: var(--c-space-5) var(--c-space-6);
+    box-shadow: var(--c-shadow-xs);
+}
+.customer-app .cord-card__head {
+    display: flex;
+    align-items: center;
+    gap: var(--c-space-2);
+    font-weight: var(--c-weight-semi);
+    font-size: var(--c-size-xs);
+    color: var(--c-text-muted);
+    margin-bottom: var(--c-space-4);
+    padding-bottom: var(--c-space-3);
+    border-bottom: 1px solid var(--c-border-muted);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+}
+.customer-app .cord-card__head i { color: var(--c-primary); font-size: 15px; }
+.customer-app .cord-card__head-count {
+    margin-left: auto;
+    font-size: var(--c-size-xs);
+    color: var(--c-text-muted);
+    font-weight: var(--c-weight-normal);
+    text-transform: none;
+    letter-spacing: 0;
+}
+.customer-app .cord-card__empty {
+    color: var(--c-text-muted);
+    font-size: var(--c-size-sm);
+    text-align: center;
+    padding: var(--c-space-5) 0;
+    margin: 0;
+}
+.customer-app .cord-card__cta {
+    margin-top: var(--c-space-4);
+    padding-top: var(--c-space-4);
+    border-top: 1px solid var(--c-border-muted);
+}
+
+/* ── Item rows (detail page) ──────────────────────────────── */
+.customer-app .cord-items-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+.customer-app .cord-item-row {
+    display: flex;
+    align-items: center;
+    gap: var(--c-space-4);
+    padding: var(--c-space-3) 0;
+    border-bottom: 1px solid var(--c-border-muted);
+}
+.customer-app .cord-item-row:last-child { border-bottom: none; }
+/* Product image thumbnail */
+.customer-app .cord-item-row__img {
+    width: 52px;
+    height: 52px;
+    border-radius: var(--c-radius-md);
+    overflow: hidden;
+    background: var(--c-bg-alt);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.customer-app .cord-item-row__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.customer-app .cord-item-row__img-ph {
+    font-size: 22px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+/* Info section */
+.customer-app .cord-item-row__info {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+.customer-app .cord-item-row__name {
+    font-size: var(--c-size-sm);
+    font-weight: var(--c-weight-semi);
+    color: var(--c-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.customer-app .cord-item-row__meta {
+    font-size: var(--c-size-xs);
+    color: var(--c-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+.customer-app .cord-item-row__meta-sep { color: var(--c-border); }
+.customer-app .cord-item-row__meta-unit { opacity: .7; }
+/* Subtotal */
+.customer-app .cord-item-row__sub {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1px;
+    flex-shrink: 0;
+}
+.customer-app .cord-item-row__sub-label {
+    font-size: var(--c-size-xs);
+    color: var(--c-text-muted);
+}
+.customer-app .cord-item-row__sub strong {
+    font-size: var(--c-size-sm);
+    font-weight: var(--c-weight-bold);
+    color: var(--c-text);
+}
+/* Items footer / total summary */
+.customer-app .cord-items-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 2px solid var(--c-border);
+    margin-top: var(--c-space-2);
+    padding-top: var(--c-space-3);
+}
+.customer-app .cord-items-footer__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--c-space-1) 0;
+    font-size: var(--c-size-sm);
+    color: var(--c-text-muted);
+}
+.customer-app .cord-items-footer__row--total {
+    padding-top: var(--c-space-2);
+    margin-top: var(--c-space-1);
+    border-top: 1px solid var(--c-border-muted);
+    font-size: var(--c-size-base);
+}
+.customer-app .cord-items-footer__row--total strong { color: var(--c-text); }
+.customer-app .cord-price {
+    font-size: var(--c-size-lg);
+    font-weight: var(--c-weight-extrabold);
+    color: var(--c-price);
+}
+
+/* ── Detail rows (key-value pairs) ───────────────────────── */
+.customer-app .cord-detail-rows { display: flex; flex-direction: column; }
+.customer-app .cord-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--c-space-2) 0;
+    border-bottom: 1px solid var(--c-border-muted);
+    font-size: var(--c-size-sm);
+    gap: var(--c-space-4);
+}
+.customer-app .cord-detail-row:last-child { border-bottom: none; }
+.customer-app .cord-detail-row span  { color: var(--c-text-muted); flex-shrink: 0; }
+.customer-app .cord-detail-row strong{ color: var(--c-text); text-align: right; }
+.customer-app .cord-detail-row--total {
+    border-top: 2px solid var(--c-border);
+    margin-top: var(--c-space-2);
+    padding-top: var(--c-space-3);
+    font-size: var(--c-size-base);
+}
+.customer-app .cord-detail-row--total span   { font-weight: var(--c-weight-bold); color: var(--c-text); }
+.customer-app .cord-detail-row--total strong { font-size: var(--c-size-lg); color: var(--c-price); }
+.customer-app .cord-mono {
+    font-family: var(--c-font-mono);
+    font-size: var(--c-size-sm);
+    color: var(--c-primary);
+    word-break: break-all;
+}
+.customer-app .cord-unit {
+    font-size: var(--c-size-xs);
+    color: var(--c-text-muted);
+    margin-left: 3px;
+}
+.customer-app .text-right { text-align: right; }
+
+/* ── Instructions block ───────────────────────────────────── */
+.customer-app .cord-instructions {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--c-space-2);
+    background: var(--c-info-bg);
+    border-radius: var(--c-radius-md);
+    padding: var(--c-space-3) var(--c-space-4);
+    font-size: var(--c-size-sm);
+    color: var(--c-info);
+}
+.customer-app .cord-instructions i { flex-shrink: 0; margin-top: 1px; }
+
+/* ── Pickup shop card ─────────────────────────────────────── */
+.customer-app .cord-pickup-shop {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--c-space-3);
+    margin-bottom: var(--c-space-2);
+}
+.customer-app .cord-pickup-shop__icon {
+    width: 40px;
+    height: 40px;
+    background: var(--c-primary-light);
+    color: var(--c-primary);
+    border-radius: var(--c-radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+.customer-app .cord-pickup-shop__info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+.customer-app .cord-pickup-shop__name {
+    font-size: var(--c-size-base);
+    font-weight: var(--c-weight-bold);
+    color: var(--c-text);
+}
+.customer-app .cord-pickup-shop__location {
+    font-size: var(--c-size-sm);
+    color: var(--c-text-muted);
+}
+
+/* ══════════════════════════════════════════════════════════
+   ORDER TIMELINE
+   ══════════════════════════════════════════════════════════ */
+.customer-app .cord-timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+.customer-app .cord-timeline__item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--c-space-3);
+    position: relative;
+    padding-bottom: var(--c-space-4);
+}
+/* Connector line between steps */
+.customer-app .cord-timeline__item::before {
+    content: '';
+    position: absolute;
+    left: 13px;
+    top: 28px;
+    bottom: 0;
+    width: 2px;
+    background: var(--c-border);
+}
+.customer-app .cord-timeline__item:last-child::before { display: none; }
+.customer-app .cord-timeline__item:last-child { padding-bottom: 0; }
+
+/* Step dot */
+.customer-app .cord-timeline__dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .8rem;
+    flex-shrink: 0;
+    border: 2px solid var(--c-border);
+    background: var(--c-surface);
+    color: var(--c-text-muted);
+    position: relative;
+    z-index: 1;
+    transition: var(--c-transition-fast);
+}
+/* Done step — filled green */
+.customer-app .cord-timeline__item--done .cord-timeline__dot {
+    background: var(--c-success);
+    border-color: var(--c-success);
+    color: #fff;
+}
+.customer-app .cord-timeline__item--done::before {
+    background: var(--c-success);
+    opacity: .35;
+}
+/* Active/in-progress step — primary ring */
+.customer-app .cord-timeline__item--active .cord-timeline__dot {
+    background: var(--c-primary-light);
+    border-color: var(--c-primary);
+    color: var(--c-primary);
+    box-shadow: 0 0 0 3px var(--c-primary-light);
+}
+/* Pending step — muted */
+.customer-app .cord-timeline__item--pending .cord-timeline__dot {
+    background: var(--c-bg-alt);
+    color: var(--c-text-muted);
+}
+/* Cancelled step — red */
+.customer-app .cord-timeline__item--cancelled .cord-timeline__dot {
+    background: var(--c-danger-bg);
+    border-color: var(--c-danger);
+    color: var(--c-danger);
+}
+/* Step text */
+.customer-app .cord-timeline__content {
+    padding-top: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.customer-app .cord-timeline__content strong {
+    font-size: var(--c-size-sm);
+    font-weight: var(--c-weight-semi);
+    color: var(--c-text);
+}
+.customer-app .cord-timeline__content span {
+    font-size: var(--c-size-xs);
+    color: var(--c-text-muted);
+}
+/* Dim pending text */
+.customer-app .cord-timeline__item--pending .cord-timeline__content strong,
+.customer-app .cord-timeline__item--pending .cord-timeline__content span {
+    opacity: .55;
+}
+
+/* ── Detail actions (side column buttons) ─────────────────── */
+.customer-app .cord-detail-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-space-3);
+}
+.customer-app .cord-detail-actions .c-btn {
+    justify-content: center;
+}
+
+/* ══════════════════════════════════════════════════════════
+   RECEIPT PAGE
+   ══════════════════════════════════════════════════════════ */
+.customer-app .cord-receipt-card {
+    max-width: 620px;
+    margin: 0 auto;
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--c-radius-xl);
+    padding: var(--c-space-8);
+    box-shadow: var(--c-shadow-lg);
+    font-size: var(--c-size-sm);
+}
+.customer-app .cord-receipt-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--c-space-4);
+}
+.customer-app .cord-receipt-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.customer-app .cord-receipt-brand__name {
+    font-size: var(--c-size-xl);
+    font-weight: var(--c-weight-extrabold);
+    color: var(--c-primary);
+}
+.customer-app .cord-receipt-brand__sub {
+    font-size: var(--c-size-sm);
+    color: var(--c-text-muted);
+}
+.customer-app .cord-receipt-divider {
+    border: none;
+    border-top: 1px dashed var(--c-border);
+    margin: var(--c-space-4) 0;
+}
+.customer-app .cord-receipt-refs,
+.customer-app .cord-receipt-payment {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-space-2);
+}
+.customer-app .cord-receipt-ref-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--c-space-4);
+    font-size: var(--c-size-sm);
+}
+.customer-app .cord-receipt-ref-row span   { color: var(--c-text-muted); }
+.customer-app .cord-receipt-ref-row strong { color: var(--c-text); text-align: right; word-break: break-all; }
+.customer-app .cord-receipt-shop {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.customer-app .cord-receipt-shop__label {
+    font-size: var(--c-size-xs);
+    color: var(--c-text-muted);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.customer-app .cord-receipt-shop strong { font-size: var(--c-size-base); color: var(--c-text); }
+.customer-app .cord-receipt-shop span   { font-size: var(--c-size-sm); color: var(--c-text-muted); }
+/* Items table */
+.customer-app .cord-receipt-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--c-size-sm);
+}
+.customer-app .cord-receipt-table thead th {
+    text-align: left;
+    font-weight: var(--c-weight-semi);
+    color: var(--c-text-muted);
+    padding: var(--c-space-2);
+    border-bottom: 1px solid var(--c-border);
+    font-size: var(--c-size-xs);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+.customer-app .cord-receipt-table thead th:not(:first-child) { text-align: right; }
+.customer-app .cord-receipt-table tbody td {
+    padding: var(--c-space-2);
+    border-bottom: 1px dashed var(--c-border-muted);
+    color: var(--c-text);
+    vertical-align: middle;
+}
+.customer-app .cord-receipt-table tbody td:not(:first-child) { text-align: right; }
+.customer-app .cord-receipt-table tbody tr:last-child td { border-bottom: none; }
+.customer-app .cord-receipt-table tfoot td {
+    padding: var(--c-space-3) var(--c-space-2);
+    border-top: 2px solid var(--c-border);
+}
+.customer-app .cord-receipt-table tfoot td:not(:first-child) { text-align: right; }
+.customer-app .cord-receipt-total td {
+    font-size: var(--c-size-base);
+    font-weight: var(--c-weight-bold);
+}
+/* Instructions */
+.customer-app .cord-receipt-instructions {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--c-space-2);
+    background: var(--c-success-bg);
+    border-radius: var(--c-radius-md);
+    padding: var(--c-space-3) var(--c-space-4);
+    color: var(--c-success);
+    font-size: var(--c-size-sm);
+}
+.customer-app .cord-receipt-instructions p { margin: 0; }
+/* Footer */
+.customer-app .cord-receipt-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--c-space-4);
+    font-size: var(--c-size-xs);
+    color: var(--c-text-muted);
+    gap: var(--c-space-4);
+    flex-wrap: wrap;
+}
+/* Actions below receipt card */
+.customer-app .cord-receipt-actions {
+    max-width: 620px;
+    margin: var(--c-space-5) auto 0;
+    display: flex;
+    gap: var(--c-space-3);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ══════════════════════════════════════════════════════════
+   LEGACY / COMPATIBILITY ALIASES
+   (keep old .cord-items-table in case any older view still
+   references it — does not affect the new cord-items-list)
+   ══════════════════════════════════════════════════════════ */
+.customer-app .cord-items-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--c-size-sm);
+}
+.customer-app .cord-items-table thead th {
+    text-align: left;
+    font-weight: var(--c-weight-semi);
+    color: var(--c-text-muted);
+    padding: var(--c-space-2);
+    border-bottom: 1px solid var(--c-border);
+    font-size: var(--c-size-xs);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+.customer-app .cord-items-table tbody td {
+    padding: var(--c-space-3) var(--c-space-2);
+    border-bottom: 1px solid var(--c-border-muted);
+    color: var(--c-text);
+    vertical-align: top;
+}
+.customer-app .cord-items-table tbody tr:last-child td { border-bottom: none; }
+.customer-app .cord-items-table tfoot td {
+    padding: var(--c-space-3) var(--c-space-2);
+    border-top: 2px solid var(--c-border);
+    color: var(--c-text);
+    font-size: var(--c-size-base);
+}
+.customer-app .cord-total-row td { font-size: var(--c-size-base); }
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Tablet (≤ 860px): stack 2-column grid ────────────────── */
+@media (max-width: 860px) {
+    .customer-app .cord-detail-grid {
+        grid-template-columns: 1fr;
+    }
+    /* Show sidebar content first (status + pickup) then items */
+    .customer-app .cord-detail-side { order: -1; }
+}
+
+/* ── Mobile (≤ 600px) ─────────────────────────────────────── */
+@media (max-width: 600px) {
+    .customer-app .cord-layout { padding-top: var(--c-space-5); }
+    .customer-app .cord-title  { font-size: var(--c-size-2xl); }
+
+    /* Search + sort stacked */
+    .customer-app .cord-toolbar { flex-direction: column; align-items: stretch; }
+    .customer-app .cord-sort-wrap { justify-content: flex-end; }
+
+    /* Order cards */
+    .customer-app .cord-item { padding: var(--c-space-4); }
+    .customer-app .cord-item__top { flex-direction: column; gap: var(--c-space-2); }
+    .customer-app .cord-item__badges { justify-content: flex-start; }
+    .customer-app .cord-item__mid { flex-direction: column; align-items: flex-start; gap: var(--c-space-2); }
+    .customer-app .cord-item__total { text-align: left; }
+    .customer-app .cord-item__total-val { font-size: var(--c-size-lg); }
+    .customer-app .cord-item__actions { gap: var(--c-space-2); }
+    .customer-app .cord-item__actions .c-btn { flex: 1 1 auto; justify-content: center; }
+
+    /* Detail header */
+    .customer-app .cord-detail-header { flex-direction: column; }
+    .customer-app .cord-detail-title  { font-size: var(--c-size-xl); }
+
+    /* Item rows — smaller image */
+    .customer-app .cord-item-row__img { width: 40px; height: 40px; }
+    .customer-app .cord-item-row { gap: var(--c-space-3); }
+
+    /* Receipt */
+    .customer-app .cord-receipt-card { padding: var(--c-space-5) var(--c-space-4); }
+    .customer-app .cord-receipt-header { flex-direction: column; gap: var(--c-space-3); }
+    .customer-app .cord-receipt-ref-row { flex-direction: column; align-items: flex-start; gap: 2px; }
+
+    /* Pagination */
+    .customer-app .cord-pagination__btn span { display: none; }
+    .customer-app .cord-pagination__btn { padding: 8px 10px; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   PRINT STYLES  (receipt page)
+   ══════════════════════════════════════════════════════════ */
+@media print {
+    .customer-navbar,
+    .cp-toolbar,
+    .cord-receipt-actions,
+    .customer-mobile-menu {
+        display: none !important;
+    }
+    .customer-app { background: #fff !important; }
+    .customer-app .cord-receipt-card {
+        box-shadow: none !important;
+        border: none !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+    }
+    .c-container { max-width: 100% !important; padding: 0 !important; }
+    .customer-app .c-badge {
+        border: 1px solid currentColor !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
+
+/* ══════════════════════════════════════════════════════════
+   PICKUP CODE / QR  (Order Detail sidebar card)
+   ══════════════════════════════════════════════════════════ */
+.customer-app .cord-card--qr {}
+
+.customer-app .cord-qr-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--c-space-3);
+    padding: var(--c-space-4) var(--c-space-2) var(--c-space-2);
+}
+
+.customer-app .cord-qr-canvas {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    border-radius: var(--c-radius);
+    padding: 8px;
+    border: 1px solid var(--c-border);
+    min-width: 160px;
+    min-height: 160px;
+}
+
+/* Fallback when QR library unavailable */
+.customer-app .cord-qr-canvas--fallback {
+    font-family: monospace;
+    font-size: var(--c-size-xl);
+    font-weight: var(--c-weight-bold);
+    letter-spacing: .08em;
+    color: var(--c-text);
+    background: var(--c-surface-2);
+    min-height: unset;
+    padding: var(--c-space-4) var(--c-space-6);
+}
+
+.customer-app .cord-qr-code-text {
+    font-family: monospace;
+    font-size: var(--c-size-xl);
+    font-weight: var(--c-weight-bold);
+    letter-spacing: .14em;
+    color: var(--c-text);
+    text-align: center;
+}
+
+.customer-app .cord-qr-hint {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--c-space-2);
+    font-size: var(--c-size-xs);
+    color: var(--c-text-muted);
+    text-align: center;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Print: show QR in receipt */
+@media print {
+    .customer-app .cord-receipt-pickup-code {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    .customer-app #receiptQrCode img,
+    .customer-app #receiptQrCode canvas {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}

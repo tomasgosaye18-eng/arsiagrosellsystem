@@ -1,0 +1,459 @@
+/**
+ * =========================================================
+ * PRODUCT MANAGEMENT MODULE – CSS
+ * =========================================================
+ * File    : public/assets/css/admin/products.css
+ * Purpose : Enterprise product module theme:
+ *           product cards, image gallery, barcode display,
+ *           status badges, filter panels, responsive tables.
+ * Deps    : Bootstrap 5 (base)
+ * =========================================================
+ */
+
+/* ── CSS Variables ─────────────────────────────────────── */
+:root {
+  --prod-primary:    #0d6efd;
+  --prod-success:    #198754;
+  --prod-warning:    #ffc107;
+  --prod-danger:     #dc3545;
+  --prod-info:       #0dcaf0;
+  --prod-card-bg:    #ffffff;
+  --prod-card-border:#e9ecef;
+  --prod-hover-bg:   #f8f9ff;
+  --prod-shadow:     0 1px 6px rgba(0,0,0,.07);
+  --prod-shadow-lg:  0 4px 20px rgba(0,0,0,.10);
+  --prod-radius:     10px;
+  --prod-radius-sm:  6px;
+  --prod-transition: .2s ease;
+}
+
+/* ── Product Cards ─────────────────────────────────────── */
+.product-card {
+  background: var(--prod-card-bg);
+  border: 1px solid var(--prod-card-border);
+  border-radius: var(--prod-radius);
+  box-shadow: var(--prod-shadow);
+  transition: box-shadow var(--prod-transition), transform var(--prod-transition);
+  overflow: hidden;
+}
+.product-card:hover {
+  box-shadow: var(--prod-shadow-lg);
+  transform: translateY(-2px);
+}
+.product-card .product-card-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  background: #f0f4ff;
+}
+.product-card .product-card-img-placeholder {
+  width: 100%;
+  height: 180px;
+  background: linear-gradient(135deg, #f0f4ff 0%, #e8ecff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #adb5bd;
+  font-size: 2.5rem;
+}
+.product-card .product-card-body {
+  padding: 14px 16px;
+}
+.product-card .product-name {
+  font-weight: 600;
+  font-size: .9rem;
+  color: #212529;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.35;
+  margin-bottom: 4px;
+}
+.product-card .product-code {
+  font-family: 'Courier New', monospace;
+  font-size: .72rem;
+  color: #6c757d;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+  padding: 1px 6px;
+  display: inline-block;
+}
+.product-card .product-price {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--prod-success);
+}
+.product-card .product-cost {
+  font-size: .78rem;
+  color: #6c757d;
+  text-decoration: line-through;
+}
+.product-card-actions {
+  border-top: 1px solid var(--prod-card-border);
+  padding: 8px 16px;
+  background: #fafbff;
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+/* ── Product Table ─────────────────────────────────────── */
+.product-thumb {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: var(--prod-radius-sm);
+  border: 1px solid var(--prod-card-border);
+  transition: transform var(--prod-transition);
+  cursor: pointer;
+}
+.product-thumb:hover {
+  transform: scale(1.08);
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+
+/* Clickable table rows */
+.product-row-link {
+  cursor: pointer;
+}
+.product-row-link:hover td {
+  background: var(--prod-hover-bg) !important;
+}
+
+/* ── Status Badges ─────────────────────────────────────── */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .03em;
+}
+.status-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+.status-badge.active       { background: #d1fae5; color: #065f46; }
+.status-badge.inactive     { background: #f3f4f6; color: #6b7280; }
+.status-badge.discontinued { background: #fee2e2; color: #991b1b; }
+.status-badge.out_of_stock { background: #fef3c7; color: #92400e; }
+.status-badge.archived     { background: #1f2937; color: #d1d5db; }
+
+/* ── Image Gallery ─────────────────────────────────────── */
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 8px;
+}
+.image-gallery-item {
+  position: relative;
+  border-radius: var(--prod-radius-sm);
+  overflow: hidden;
+  border: 2px solid transparent;
+  transition: border-color var(--prod-transition);
+  cursor: pointer;
+}
+.image-gallery-item:hover {
+  border-color: var(--prod-primary);
+}
+.image-gallery-item.primary {
+  border-color: var(--prod-primary);
+}
+.image-gallery-item img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  display: block;
+}
+.image-gallery-item .image-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  opacity: 0;
+  transition: opacity var(--prod-transition);
+}
+.image-gallery-item:hover .image-overlay {
+  opacity: 1;
+}
+.image-gallery-item .primary-badge {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  background: var(--prod-primary);
+  color: #fff;
+  font-size: .6rem;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
+/* ── Barcode Cards ─────────────────────────────────────── */
+.barcode-card {
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: var(--prod-radius);
+  padding: 16px;
+  text-align: center;
+  box-shadow: var(--prod-shadow);
+  page-break-inside: avoid;
+}
+.barcode-card .barcode-product-name {
+  font-weight: 600;
+  font-size: .82rem;
+  margin-bottom: 4px;
+  color: #212529;
+}
+.barcode-card .barcode-product-code {
+  font-family: monospace;
+  font-size: .72rem;
+  color: #6c757d;
+  margin-bottom: 8px;
+}
+.barcode-card .barcode-svg-wrapper {
+  margin: 8px auto;
+  max-width: 280px;
+}
+.barcode-card .barcode-number {
+  font-family: monospace;
+  font-size: .85rem;
+  letter-spacing: .1em;
+  margin-top: 4px;
+  color: #212529;
+}
+.barcode-card .barcode-price {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--prod-success);
+  margin-top: 6px;
+}
+
+/* ── Image Upload Drop Zone ────────────────────────────── */
+.upload-drop-zone {
+  border: 2px dashed #ced4da;
+  border-radius: var(--prod-radius);
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--prod-transition), background var(--prod-transition);
+  background: #fafbff;
+}
+.upload-drop-zone:hover,
+.upload-drop-zone.drag-over {
+  border-color: var(--prod-primary);
+  background: #eff5ff;
+}
+.upload-drop-zone .upload-icon {
+  font-size: 2rem;
+  color: #adb5bd;
+  display: block;
+  margin-bottom: 8px;
+}
+.upload-drop-zone:hover .upload-icon,
+.upload-drop-zone.drag-over .upload-icon {
+  color: var(--prod-primary);
+}
+
+/* ── Filter Panel ──────────────────────────────────────── */
+.filter-panel {
+  background: #fff;
+  border: 1px solid var(--prod-card-border);
+  border-radius: var(--prod-radius);
+  padding: 16px;
+  box-shadow: var(--prod-shadow);
+}
+.filter-panel .filter-title {
+  font-weight: 600;
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: #6c757d;
+  margin-bottom: 10px;
+}
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #e8f0fe;
+  color: var(--prod-primary);
+  border: 1px solid #b3c9fc;
+  border-radius: 20px;
+  padding: 2px 10px 2px 8px;
+  font-size: .75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--prod-transition);
+}
+.filter-chip:hover {
+  background: #d2e3fc;
+}
+.filter-chip .remove-chip {
+  font-size: .8rem;
+  line-height: 1;
+  opacity: .7;
+}
+
+/* ── Price History Chart / Table ───────────────────────── */
+.price-change-up   { color: #198754; }
+.price-change-down { color: #dc3545; }
+.price-badge-selling {
+  background: #d1fae5;
+  color: #065f46;
+  font-size: .72rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.price-badge-cost {
+  background: #e2e8f0;
+  color: #334155;
+  font-size: .72rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+/* ── Stat Cards ────────────────────────────────────────── */
+.stat-card {
+  background: #fff;
+  border: 1px solid var(--prod-card-border);
+  border-radius: var(--prod-radius);
+  padding: 14px 18px;
+  box-shadow: var(--prod-shadow);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: box-shadow var(--prod-transition);
+}
+.stat-card:hover { box-shadow: var(--prod-shadow-lg); }
+.stat-card .stat-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+.stat-card .stat-value {
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: #212529;
+}
+.stat-card .stat-label {
+  font-size: .72rem;
+  color: #6c757d;
+  margin-top: 2px;
+}
+
+/* ── Responsive Table Improvements ────────────────────── */
+@media (max-width: 768px) {
+  .product-table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .product-card-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .filter-panel .row > [class*="col-md"] {
+    margin-bottom: 8px;
+  }
+}
+
+@media (max-width: 576px) {
+  .product-card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Toast / Loading Overlay ───────────────────────────── */
+.product-loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255,255,255,.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* ── Barcode Preview inline ─────────────────────────────── */
+.barcode-preview-inline {
+  border: 1px solid #dee2e6;
+  border-radius: var(--prod-radius-sm);
+  background: #fff;
+  padding: 8px 12px;
+  display: inline-block;
+  margin-top: 8px;
+}
+.barcode-preview-inline svg {
+  display: block;
+}
+
+/* ── Category Icon Badges ──────────────────────────────── */
+.category-icon-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  background: #eff5ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--prod-primary);
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+/* ── Unit Type Pills ───────────────────────────────────── */
+.unit-type-pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: .72rem;
+  font-weight: 500;
+}
+.unit-type-pill.weight  { background: #dbeafe; color: #1e40af; }
+.unit-type-pill.volume  { background: #ede9fe; color: #5b21b6; }
+.unit-type-pill.piece   { background: #dcfce7; color: #166534; }
+.unit-type-pill.area    { background: #fef3c7; color: #92400e; }
+.unit-type-pill.length  { background: #fce7f3; color: #9d174d; }
+.unit-type-pill.other   { background: #f3f4f6; color: #374151; }
+
+/* ── Drag & Drop feedback ──────────────────────────────── */
+.border-dashed { border-style: dashed !important; }
+.dragover-active {
+  border-color: var(--prod-primary) !important;
+  background: #eff5ff !important;
+}
+
+/* ── Print-specific ────────────────────────────────────── */
+@media print {
+  .no-print,
+  .sidebar,
+  .navbar,
+  header,
+  footer,
+  nav,
+  .btn:not(.btn-print) {
+    display: none !important;
+  }
+  .barcode-card {
+    border: 1px solid #999;
+    break-inside: avoid;
+    margin: 4mm;
+  }
+  body { background: #fff !important; font-size: 11pt; }
+}
